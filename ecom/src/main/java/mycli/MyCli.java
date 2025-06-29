@@ -1,7 +1,6 @@
 package mycli;
 
-import mycli.functions.MakeMigration;
-import mycli.functions.MakeModel;
+import mycli.functions.*;
 
 public class MyCli {
     public static void main(String[] args) {
@@ -18,6 +17,9 @@ public class MyCli {
         switch (command) {
             case "make:model" -> MakeModel.run(name);
             case "make:migration" -> MakeMigration.run(name);
+            case "make:controller" -> MakeController.run(name);
+            case "make:service" -> MakeService.run(name);
+            case "make:dto" -> MakeDto.run(name);
             default -> System.out.println("Unknown command: " + command);
         }
     }

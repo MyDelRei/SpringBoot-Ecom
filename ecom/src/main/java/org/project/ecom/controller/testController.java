@@ -24,7 +24,7 @@ public class testController {
         return ResponseEntity.ok(testingServices.getAllProducts());
     }
 
-    @GetMapping("/")
+    @GetMapping("/test")
     public String helloWorld() {
         return "Hello World";
     }
