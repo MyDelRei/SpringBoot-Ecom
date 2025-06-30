@@ -1,5 +1,15 @@
-
+// use POST to add or delete data for safer binding use put for update
 const ajaxHelper = {
+
+    _getCsrfHeaders: function() {
+        const csrfToken = $('meta[name="_csrf"]').attr('content');
+        const csrfHeader = $('meta[name="_csrf_header"]').attr('content');
+        return {
+            token: csrfToken,
+            headerName: csrfHeader
+        };
+    },
+
     get: function (url, successCallback, errorCallback) {
         $.ajax({
             url: url,

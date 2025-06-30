@@ -45,7 +45,7 @@ public class AdminController {
         return ResponseEntity.ok("Brand updated successfully");
     }
 
-    @DeleteMapping("/brands")
+    @PostMapping("/delete-brands")
     public ResponseEntity<?> deleteBrand(@RequestBody @Valid Brand model,BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             ResponseEntity.badRequest().body(null);

@@ -18,15 +18,15 @@
       <div class="flex justify-between mb-6 space-y-4 md:space-y-0">
         <h2 class="text-[27px] font-semibold text-gray-800">My brand</h2>
         <!-- Add Brand Button -->
-        <button class="bg-indigo-600 hover:bg-indigo-700 w-[210px] text-white font-semibold py-2 px-4 rounded-full shadow-md flex items-center justify-start transition duration-200">
+        <a th:href="@{/brands/add-brand}" class="bg-indigo-600 hover:bg-indigo-700 w-[210px] text-white font-semibold py-2 px-4 rounded-full shadow-md flex items-center justify-start transition duration-200">
           <i class="fas fa-plus mr-2"></i> Add brand
-        </button>
+        </a>
       </div>
 
       <div class="flex justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full md:w-auto">
         <!-- Dropdown Filter -->
         <div class="relative w-full sm:w-auto">
-          <select class="block w-[200px] py-2 px-4 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm appearance-none">
+          <select id="sort-table" class="block w-[200px] py-2 px-4 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm appearance-none">
             <option>Title</option>
             <option>Brand Name</option>
             <option>Slug</option>
@@ -39,7 +39,7 @@
                                 <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
                                     <i class="fas fa-search text-gray-600"></i>
                                 </span>
-          <input type="text" placeholder="Search" class="w-full pl-10 pr-4 py-2 rounded-full shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white text-sm">
+          <input type="text" id="search" placeholder="Search" class="w-full pl-10 pr-4 py-2 rounded-full shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white text-sm">
         </div>
 
 
@@ -76,13 +76,50 @@
     </div>
 
     <!-- Pagination -->
-    <div class="flex items-center justify-end mt-6 space-x-1 text-gray-600">
-      <button class="p-2 rounded-lg hover:bg-gray-200 transition duration-200"><i class="fas fa-chevron-left text-sm"></i></button>
-      <button class="px-3 py-1 rounded-lg bg-indigo-600 text-white font-semibold shadow-md">1</button>
-      <button class="px-3 py-1 rounded-lg hover:bg-gray-200 transition duration-200">2</button>
-      <span class="px-3 py-1">...</span>
-      <button class="px-3 py-1 rounded-lg hover:bg-gray-200 transition duration-200">5</button>
-      <button class="p-2 rounded-lg hover:bg-gray-200 transition duration-200"><i class="fas fa-chevron-right text-sm"></i></button>
+    <div id="pagination" class="flex items-center justify-end mt-6 space-x-1 text-gray-600"></div>
+
+  </div>
+
+
+<!--overlay-->
+  <div id="myOverlay" class="
+        fixed inset-0 z-50
+        flex items-start justify-center
+        overlay-backdrop
+        transition-all duration-500 ease-in-out
+        invisible opacity-0
+    ">
+    <div class="
+            overlay-content-wrapper
+            transform -translate-y-full
+            transition-transform duration-500 ease-in-out
+            w-11/12 max-w-2xl
+        ">
+      <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-280px)] w-full">
+        <h2 class="text-xl font-semibold text-gray-800 mb-6">Brand information</h2>
+
+        <form id="UpdateBrandForm">
+          <div class="mb-4">
+            <label for="brandName" class="block text-gray-700 text-sm font-medium mb-2">Brand name</label>
+            <input type="text" id="brandName" name="brandName" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter brand name">
+          </div>
+
+          <div class="mb-4">
+            <label for="slug" class="block text-gray-700 text-sm font-medium mb-2">Slug</label>
+            <input type="text" id="slug" name="slug" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter slug">
+          </div>
+
+          <div class="mb-6">
+            <label for="description" class="block text-gray-700 text-sm font-medium mb-2">Description</label>
+            <textarea id="description" name="description" rows="5" class="shadow-sm appearance-none border border-gray-300 rounded-[15px] w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200 resize-y" placeholder="Enter description"></textarea>
+          </div>
+
+          <div class="flex justify-end space-x-4">
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Save</button>
+            <button type="button" id="cancelButton" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Cancel</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 
