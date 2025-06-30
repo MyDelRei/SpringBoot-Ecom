@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/admin")
-public class AdminController {
+public class BrandController {
 
     @Autowired
     AdminService adminService;
