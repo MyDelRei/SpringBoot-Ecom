@@ -35,4 +35,21 @@ public class WebController {
         model.addAttribute("currentUri", request.getRequestURI()); // Pass current URI
         return "layout";
     }
+
+    @GetMapping("/category")
+    public String showCategory(Model model, @RequestParam(required = false) String success, HttpServletRequest request){
+        model.addAttribute("pageTitle", "Category page");
+        model.addAttribute("successMessage", success);
+        model.addAttribute("contentFragment", "admin/category-list");
+        model.addAttribute("currentUri", request.getRequestURI());
+        return "layout";
+    }
+    @GetMapping("/category/add-category")
+    public String showAddCategory(Model model, HttpServletRequest request){
+        model.addAttribute("pageTitle", "Add Category");
+        model.addAttribute("contentFragment", "admin/add-category");
+        model.addAttribute("currentUri", request.getRequestURI());
+        return "layout";
+    }
+
 }

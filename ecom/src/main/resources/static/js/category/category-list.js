@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    let allBrands = []; // This will store the original, unfiltered data
+    let allCategories = []; // This will store the original, unfiltered data
     let currentSearchTerm = '';
     let currentSortBy = 'Title'; // Default sort option
 
@@ -19,18 +19,18 @@ $(document).ready(function () {
         const paginatedBrands = brandsToRender.slice(start, end); // Apply pagination here
 
         if (paginatedBrands.length === 0) {
-            tbody.append('<tr><td colspan="5" class="py-3 px-4 text-center text-gray-500">No brands found.</td></tr>');
+            tbody.append('<tr><td colspan="5" class="py-3 px-4 text-center text-gray-500">No Category found.</td></tr>');
             renderPagination(); // Still render pagination even if no results, to show "0 of 0" or similar if desired
             return;
         }
 
-        paginatedBrands.forEach(function (brand) {
+        paginatedBrands.forEach(function (category) {
             const row = `
                 <tr class="border-b border-gray-200 hover:bg-gray-50">
                     <td class="py-3 px-4 border-r border-gray-200">
                         <div class="inline-flex items-center">
                             <label class="flex items-center cursor-pointer relative">
-                                <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="check-${brand.brandId}" />
+                                <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="check-${category.categoryId}" />
                                 <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
                                         <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
@@ -39,16 +39,16 @@ $(document).ready(function () {
                             </label>
                         </div>
                     </td>
-                    <td class="py-3 px-4 border-r border-gray-200">${brand.name}</td>
-                    <td class="py-3 px-4 border-r border-gray-200">${brand.slug}</td>
-                    <td class="py-3 px-4 border-r border-gray-200 max-w-[350px] whitespace-nowrap overflow-hidden text-ellipsis">${brand.description}</td>
+                    <td class="py-3 px-4 border-r border-gray-200">${category.name}</td>
+                    <td class="py-3 px-4 border-r border-gray-200">${category.slug}</td>
+                    <td class="py-3 px-4 border-r border-gray-200 max-w-[350px] whitespace-nowrap overflow-hidden text-ellipsis">${category.description}</td>
                     <td class="py-3 px-4 text-center space-x-2">
-                        <button id="edit-brand" class="text-blue-500 hover:text-blue-700 p-2 rounded-full hover:bg-blue-100 transition duration-200"
-                            data-id="${brand.brandId}" data-name="${brand.name}" data-slug="${brand.slug}" data-description="${brand.description}">
+                        <button class="edit-category text-blue-500 hover:text-blue-700 p-2 rounded-full hover:bg-blue-100 transition duration-200"
+                            data-id="${category.categoryId}" data-name="${category.name}" data-slug="${category.slug}" data-description="${category.description}">
                             <i class="fas fa-pencil-alt"></i>
                         </button>
-                        <button id="delete-brand" class="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition duration-200"
-                            data-id="${brand.brandId}">
+                        <button id="delete-category" class="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition duration-200"
+                            data-id="${category.categoryId}">
                             <i class="fas fa-trash-alt"></i>
                         </button>
                     </td>
@@ -133,7 +133,7 @@ $(document).ready(function () {
     // --- Filtering + Sorting + Rendering ---
     // Added 'resetPage' parameter with a default of true
     function applySortAndSearch(resetPage = true) {
-        let filteredBrands = allBrands.slice();
+        let filteredBrands = allCategories.slice();
 
         if (currentSearchTerm) {
             const term = currentSearchTerm.toLowerCase();
@@ -184,27 +184,28 @@ $(document).ready(function () {
     // For demonstration, I'm mocking some data if ajaxHelper is not present
     if (typeof ajaxHelper === 'undefined') {
         console.warn("ajaxHelper is not defined. Using mock data for demonstration.");
-        allBrands = [
-            { brandId: 'b1', name: 'Brand A', slug: 'brand-a', description: 'Description for brand A' },
-            { brandId: 'b2', name: 'Brand B', slug: 'brand-b', description: 'Description for brand B' },
-            { brandId: 'b3', name: 'Brand C', slug: 'brand-c', description: 'Description for brand C' },
-            { brandId: 'b4', name: 'Brand D', slug: 'brand-d', description: 'Description for brand D' },
-            { brandId: 'b5', name: 'Brand E', slug: 'brand-e', description: 'Description for brand E' },
-            { brandId: 'b6', name: 'Brand F', slug: 'brand-f', description: 'Description for brand F' },
-            { brandId: 'b7', name: 'Brand G', slug: 'brand-g', description: 'Description for brand G' },
-            { brandId: 'b8', name: 'Brand H', slug: 'brand-h', description: 'Description for brand H' },
-            { brandId: 'b9', name: 'Brand I', slug: 'brand-i', description: 'Description for brand I' },
-            { brandId: 'b10', name: 'Brand J', slug: 'brand-j', description: 'Description for brand J' },
-            { brandId: 'b11', name: 'Brand K', slug: 'brand-k', description: 'Description for brand K' },
-            { brandId: 'b12', name: 'Brand L', slug: 'brand-l', description: 'Description for brand L' },
-            { brandId: 'b13', name: 'Brand M', slug: 'brand-m', description: 'Description for brand M' },
-            { brandId: 'b14', name: 'Brand N', slug: 'brand-n', description: 'Description for brand N' },
-            { brandId: 'b15', 'name': 'Brand O', slug: 'brand-o', description: 'Description for brand O' },
+        allCategories = [
+            { categoryId: 'b1', name: 'Category A', slug: 'category-a', description: 'Description for category A' },
+            { categoryId: 'b2', name: 'Category B', slug: 'category-b', description: 'Description for category B' },
+            { categoryId: 'b3', name: 'Category C', slug: 'category-c', description: 'Description for category C' },
+            { categoryId: 'b4', name: 'Category D', slug: 'category-d', description: 'Description for category D' },
+            { categoryId: 'b5', name: 'Category E', slug: 'category-e', description: 'Description for category E' },
+            { categoryId: 'b6', name: 'Category F', slug: 'category-f', description: 'Description for category F' },
+            { categoryId: 'b7', name: 'Category G', slug: 'category-g', description: 'Description for category G' },
+            { categoryId: 'b8', name: 'Category H', slug: 'category-h', description: 'Description for category H' },
+            { categoryId: 'b9', name: 'Category I', slug: 'category-i', description: 'Description for category I' },
+            { categoryId: 'b10', name: 'Category J', slug: 'category-j', description: 'Description for category J' },
+            { categoryId: 'b11', name: 'Category K', slug: 'category-k', description: 'Description for category K' },
+            { categoryId: 'b12', name: 'Category L', slug: 'category-l', description: 'Description for category L' },
+            { categoryId: 'b13', name: 'Category M', slug: 'category-m', description: 'Description for category M' },
+            { categoryId: 'b14', name: 'Category N', slug: 'category-n', description: 'Description for category N' },
+            { categoryId: 'b15', name: 'Category O', slug: 'category-o', description: 'Description for category O' },
+
         ];
         applySortAndSearch(); // Render the table with initial sort/search (defaults to resetPage = true)
     } else {
-        ajaxHelper.get("/api/v1/admin/brands", function (brands) {
-            allBrands = brands; // Store the fetched data
+        ajaxHelper.get("/api/v1/admin/category", function (brands) {
+            allCategories = brands; // Store the fetched data
             applySortAndSearch(); // Render the table with initial sort/search (defaults to resetPage = true)
         });
     }
@@ -245,63 +246,63 @@ $(document).ready(function () {
 
     // --- Existing Event Listeners (Untouched, assuming `ajaxHelper` and overlay functions exist) ---
 
-    // Edit Brand Button Click
-    let brandData = {}; // Define brandData in a higher scope if it's used globally
-    $(document).on('click', '#edit-brand', function (e) {
-        const brandId = $(this).data('id');
-        const brandName = $(this).data('name');
+    // Edit Category Button Click
+    let categoryData = {}; // Define categoryData in a higher scope if it's used globally
+    $(document).on('click', '.edit-category', function (e) {
+        const categoryId = $(this).data('id');
+        const categoryName = $(this).data('name');
         const slug = $(this).data('slug');
         const description = $(this).data('description');
-        brandData = {
-            brandId: brandId,
-            name: brandName,
+        categoryData = {
+            categoryId: categoryId,
+            name: categoryName,
             slug: slug,
             description: description
         }
-        console.log(brandData);
-        openOverlay(brandData)
+        console.log(categoryData);
+        openOverlay(categoryData)
     });
 
-    // Delete Brand Button Click
-    $(document).on('click', '#delete-brand', function (e) {
+    // Delete category Button Click
+    $(document).on('click', '#delete-category', function (e) {
         e.preventDefault();
 
-        const brandId = $(this).data('id');
+        const categoryId = $(this).data('id');
 
         // Replace native confirm with a custom modal if possible in your UI
-        if (!confirm('Are you sure you want to delete this brand? This action cannot be undone.')) {
+        if (!confirm('Are you sure you want to delete this category? This action cannot be undone.')) {
             return;
         }
 
         const dataToSend = {
-            brandId: brandId
+            categoryId: categoryId
         };
 
         if (typeof ajaxHelper !== 'undefined') {
-            ajaxHelper.post('/api/v1/admin/delete-brands', dataToSend,
+            ajaxHelper.post('/api/v1/admin/delete-category', dataToSend,
                 function (response) {
                     console.log('Delete successful:', response);
                     // Re-fetch and re-render data
-                    ajaxHelper.get("/api/v1/admin/brands", function (brands) {
-                        allBrands = brands;
+                    ajaxHelper.get("/api/v1/admin/category", function (categories) {
+                        allCategories = categories;
                         applySortAndSearch(true); // Reset page after delete, as data has changed
                     });
                     // Consider removing this if you want to avoid a full page reload
                     // window.location.href = `/brands?success=${response}`;
                 },
                 function (err) {
-                    console.error('Delete Brand Failed:', err);
+                    console.error('Delete category Failed:', err);
                     const errorMessage = err.responseJSON ? err.responseJSON.message : (err.responseText || 'Unknown error occurred.');
-                    alert('Failed to delete brand: ' + errorMessage); // Replace with custom modal
+                    alert('Failed to delete category: ' + errorMessage); // Replace it with a custom modal
                 }
             );
         } else {
             console.warn("ajaxHelper is not defined. Delete operation skipped.");
             // Simulate deletion for mock data
-            allBrands = allBrands.filter(brand => brand.brandId !== brandId);
+            allCategories = allCategories.filter(categories => categories.categoryId !== categories);
             applySortAndSearch(true); // Reset page for mock data as well
         }
-        console.log('Attempting to delete brand with ID:', brandId);
+        console.log('Attempting to delete brand with ID:', categoryId);
     });
 
     // Assuming these overlay functions and elements exist in your HTML
@@ -309,13 +310,13 @@ $(document).ready(function () {
     const $overlay = $('#myOverlay');
     const $overlayContentWrapper = $overlay.find('.overlay-content-wrapper');
 
-    function openOverlay(brandData) {
+    function openOverlay(categoryData) {
         $overlay.removeClass('invisible opacity-0');
         $overlay.addClass('visible opacity-100');
 
-        $('#brandName').val(brandData.name);
-        $('#slug').val(brandData.slug);
-        $('#description').val(brandData.description);
+        $('#brandName').val(categoryData.name);
+        $('#slug').val(categoryData.slug);
+        $('#description').val(categoryData.description);
 
         $overlayContentWrapper.removeClass('-translate-y-full');
         $overlayContentWrapper.addClass('translate-y-0');
@@ -348,34 +349,34 @@ $(document).ready(function () {
         }
     });
 
-    $('#UpdateBrandForm').on('submit', function(e) {
+    $('#updateCategoryForm').on('submit', function(e) {
         e.preventDefault();
         const data = {
-            brandId: brandData.brandId,
-            name: $('#brandName').val(),
+            categoryId: categoryData.categoryId,
+            name: $('#categoryName').val(),
             slug: $('#slug').val(),
             description: $('#description').val()
         };
-        alert('logic start'); // Replace with custom modal
+        alert('logic start'); // Replace it with a custom modal
         console.log(data);
 
         if (typeof ajaxHelper !== 'undefined') {
-            ajaxHelper.put('/api/v1/admin/brands', data, function (response) {
+            ajaxHelper.put('/api/v1/admin/category', data, function (response) {
                 // Re-fetch and re-render data after a successful update
-                ajaxHelper.get("/api/v1/admin/brands", function (brands) {
-                    allBrands = brands;
+                ajaxHelper.get("/api/v1/admin/category", function (brands) {
+                    allCategories = brands;
                     applySortAndSearch(true); // Reset page after update, as data has changed
                 });
                 // Consider removing this if you want to avoid a full page reload
                 // window.location.href = `/brands?success=${response}`;
             }, function (err) {
-                console.error('Update Brand Failed:', err);
-                alert('Failed to update brand.'); // Replace it with a custom modal
+                console.error('Update category Failed:', err);
+                alert('Failed to update category.'); // Replace it with a custom modal
             });
         } else {
             console.warn("ajaxHelper is not defined. Update operation skipped.");
             // Simulate update for mock data
-            allBrands = allBrands.map(brand => brand.brandId === data.brandId ? {...brand, ...data} : brand);
+            allCategories = allCategories.map(category => category.categoryId === data.categoryId ? {...category, ...data} : category);
             applySortAndSearch(true); // Reset page for mock data as well
         }
         closeOverlay();

@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:XE
-    username: ECOM_PROJECT
+    username: ECOM_Project
     password: 1212
     driver-class-name: oracle.jdbc.OracleDriver
 
