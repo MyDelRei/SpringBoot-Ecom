@@ -7,6 +7,7 @@ spring:
     password: 1212
     driver-class-name: oracle.jdbc.OracleDriver
 
+
 #  jpa:
 #    hibernate:
 #      ddl-auto: update
