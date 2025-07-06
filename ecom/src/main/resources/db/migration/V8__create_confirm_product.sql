@@ -5,6 +5,5 @@ CREATE TABLE Product (
                           Product_Name VARCHAR2(450) NOT NULL UNIQUE,
                           Brand_ID NUMBER NOT NULL,
                           Description CLOB,
-                          Base_Price NUMBER(12, 2),
                           CONSTRAINT fk_brand FOREIGN KEY (Brand_ID) REFERENCES brand(Brand_ID)
 );

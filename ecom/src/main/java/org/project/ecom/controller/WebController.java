@@ -52,4 +52,38 @@ public class WebController {
         return "layout";
     }
 
+
+    @GetMapping("/product")
+    public String showProduct(Model model, @RequestParam(required = false) String success, HttpServletRequest request) { // Add HttpServletRequest
+        model.addAttribute("pageTitle", "product page");
+        model.addAttribute("successMessage", success);
+        model.addAttribute("contentFragment", "admin/product-list");
+        model.addAttribute("currentUri", request.getRequestURI()); // Pass current URI
+        return "layout";
+    }
+
+    @GetMapping("/product/add-product")
+    public String showAddProduct(Model model, HttpServletRequest request) { // Add HttpServletRequest
+        model.addAttribute("pageTitle", "Add Brand");
+        model.addAttribute("contentFragment", "admin/add-product");
+        model.addAttribute("currentUri", request.getRequestURI()); // Pass current URI
+        return "layout";
+    }
+
+
+
+
+
+
+
+
+    @GetMapping("/sku")
+    public String showSku(Model model, @RequestParam(required = false) String success, HttpServletRequest request) { // Add HttpServletRequest
+        model.addAttribute("pageTitle", "sku page");
+        model.addAttribute("successMessage", success);
+        model.addAttribute("contentFragment", "admin/sku-list");
+        model.addAttribute("currentUri", request.getRequestURI()); // Pass current URI
+        return "layout";
+    }
+
 }
