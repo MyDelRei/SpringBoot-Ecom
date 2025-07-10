@@ -350,34 +350,57 @@ $(document).ready(function () {
 
     $('#UpdateBrandForm').on('submit', function(e) {
         e.preventDefault();
+
         const data = {
             brandId: brandData.brandId,
             name: $('#brandName').val(),
             slug: $('#slug').val(),
             description: $('#description').val()
         };
-        alert('logic start'); // Replace with custom modal
-        console.log(data);
 
-        if (typeof ajaxHelper !== 'undefined') {
-            ajaxHelper.put('/api/v1/admin/brands', data, function (response) {
-                // Re-fetch and re-render data after a successful update
-                ajaxHelper.get("/api/v1/admin/brands", function (brands) {
-                    allBrands = brands;
-                    applySortAndSearch(true); // Reset page after update, as data has changed
+        Swal.fire({
+            title: 'Update Brand?',
+            text: 'Do you want to save these changes?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, update it',
+            cancelButtonText: 'No, cancel'
+        }).then((result) => {
+            if (!result.isConfirmed) return;
+
+            if (typeof ajaxHelper !== 'undefined') {
+                ajaxHelper.put('/api/v1/admin/brands', data, function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Updated',
+                        text: 'Brand updated successfully!',
+                        confirmButtonText: 'OK'
+                    });
+
+                    ajaxHelper.get("/api/v1/admin/brands", function (brands) {
+                        allBrands = brands;
+                        applySortAndSearch(true); // Re-render
+                    });
+
+                }, function (err) {
+                    console.error('Update Brand Failed:', err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Update Failed',
+                        text: 'Something went wrong while updating the brand.'
+                    });
                 });
-                // Consider removing this if you want to avoid a full page reload
-                // window.location.href = `/brands?success=${response}`;
-            }, function (err) {
-                console.error('Update Brand Failed:', err);
-                alert('Failed to update brand.'); // Replace it with a custom modal
-            });
-        } else {
-            console.warn("ajaxHelper is not defined. Update operation skipped.");
-            // Simulate update for mock data
-            allBrands = allBrands.map(brand => brand.brandId === data.brandId ? {...brand, ...data} : brand);
-            applySortAndSearch(true); // Reset page for mock data as well
-        }
-        closeOverlay();
+            } else {
+                console.warn("ajaxHelper is not defined. Update operation skipped.");
+
+                allBrands = allBrands.map(brand =>
+                    brand.brandId === data.brandId ? { ...brand, ...data } : brand
+                );
+                applySortAndSearch(true);
+            }
+
+            closeOverlay();
+        });
     });
+
 });

@@ -351,34 +351,59 @@ $(document).ready(function () {
 
     $('#updateCategoryForm').on('submit', function(e) {
         e.preventDefault();
+
         const data = {
             categoryId: categoryData.categoryId,
             name: $('#categoryName').val(),
             slug: $('#slug').val(),
             description: $('#description').val()
         };
-        alert('logic start'); // Replace it with a custom modal
-        console.log(data);
 
-        if (typeof ajaxHelper !== 'undefined') {
-            ajaxHelper.put('/api/v1/admin/category', data, function (response) {
-                // Re-fetch and re-render data after a successful update
-                ajaxHelper.get("/api/v1/admin/category", function (brands) {
-                    allCategories = brands;
-                    applySortAndSearch(true); // Reset page after update, as data has changed
+        Swal.fire({
+            title: 'Update Category?',
+            text: 'Do you want to save these changes?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, update it',
+            cancelButtonText: 'No, cancel'
+        }).then((result) => {
+            if (!result.isConfirmed) return;
+
+            if (typeof ajaxHelper !== 'undefined') {
+                ajaxHelper.put('/api/v1/admin/category', data, function (response) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Updated',
+                        text: 'Category updated successfully!',
+                        confirmButtonText: 'OK'
+                    });
+
+                    // Re-fetch & re-render the updated list
+                    ajaxHelper.get("/api/v1/admin/category", function (brands) {
+                        allCategories = brands;
+                        applySortAndSearch(true); // Reset page
+                    });
+
+                }, function (err) {
+                    console.error('Update category Failed:', err);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Update Failed',
+                        text: 'Something went wrong while updating category.'
+                    });
                 });
-                // Consider removing this if you want to avoid a full page reload
-                // window.location.href = `/brands?success=${response}`;
-            }, function (err) {
-                console.error('Update category Failed:', err);
-                alert('Failed to update category.'); // Replace it with a custom modal
-            });
-        } else {
-            console.warn("ajaxHelper is not defined. Update operation skipped.");
-            // Simulate update for mock data
-            allCategories = allCategories.map(category => category.categoryId === data.categoryId ? {...category, ...data} : category);
-            applySortAndSearch(true); // Reset page for mock data as well
-        }
-        closeOverlay();
+            } else {
+                console.warn("ajaxHelper is not defined. Update operation skipped.");
+
+                // Simulated local update
+                allCategories = allCategories.map(category =>
+                    category.categoryId === data.categoryId ? { ...category, ...data } : category
+                );
+                applySortAndSearch(true);
+            }
+
+            closeOverlay(); // Close modal/form
+        });
     });
+
 });

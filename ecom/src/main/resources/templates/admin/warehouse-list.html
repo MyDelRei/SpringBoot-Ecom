@@ -1,8 +1,8 @@
 <section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
   <div class="flex items-center justify-between space-y-6">
-    <h1 class="text-[33px] font-bold text-gray-800 mb-6">Stock keeping unit</h1>
+    <h1 class="text-[33px] font-bold text-gray-800 mb-6">Warehouse page</h1>
     <div th:if="${successMessage}" role="alert" class="mb-4 relative flex w-[400px] p-3 text-sm text-white bg-blue-600 rounded-md">
-      <span th:text="${successMessage}">sku created successfully!</span>
+      <span th:text="${successMessage}">Warehouse created successfully!</span>
       <button class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5" type="button" onclick="this.parentElement.remove()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -13,13 +13,13 @@
 
   <!-- Main content div with 30px rounded corners -->
   <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
-    <!-- Top Section: My brand, Add brand, Search, Filter -->
+    <!-- Top Section: My warehouse, Add warehouse, Search, Filter -->
     <div class="flex flex-col justify-between mb-6 space-y-4 md:space-y-0">
       <div class="flex justify-between mb-6 space-y-4 md:space-y-0">
-        <h2 class="text-[27px] font-semibold text-gray-800">My SKU</h2>
-        <!-- Add sku Button -->
-        <a th:href="@{/sku/add-sku}" class="bg-indigo-600 hover:bg-indigo-700 w-[210px] text-white font-semibold py-2 px-4 rounded-full shadow-md flex items-center justify-start transition duration-200">
-          <i class="fas fa-plus mr-2"></i> Add SKU
+        <h2 class="text-[27px] font-semibold text-gray-800">Warehouse</h2>
+        <!-- Add Warehouse Button -->
+        <a th:href="@{/warehouse/add-warehouse}" class="bg-indigo-600 hover:bg-indigo-700 w-[210px] text-white font-semibold py-2 px-4 rounded-full shadow-md flex items-center justify-start transition duration-200">
+          <i class="fas fa-plus mr-2"></i> Add Warehouse
         </a>
       </div>
 
@@ -27,11 +27,9 @@
         <!-- Dropdown Filter -->
         <div class="relative w-full sm:w-auto">
           <select id="sort-table" class="block w-[200px] py-2 px-4 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm appearance-none">
-            <option>Title</option>
-            <option>SKU CODE</option>
-            <option>Product</option>
-            <option>Base price</option>
-            <option>Sale price</option>
+            <option value="warehouseName">Warehouse</option>
+            <option value="location">Location</option>
+            <option value="description">Description</option>
           </select>
         </div>
 
@@ -47,7 +45,7 @@
       </div>
     </div>
 
-    <!-- sku List Table -->
+    <!-- Warehouse List Table -->
     <div class="overflow-x-auto rounded-[20px] border border-gray-200"> <!-- Outer border and rounded corners for the table container -->
       <table class="min-w-full bg-white">
         <thead>
@@ -64,10 +62,9 @@
               </label>
             </div>
           </th>
-          <th class="py-3 px-4 border-b border-r border-gray-200">SKU Code</th>
-          <th class="py-3 px-4 border-b border-r border-gray-200">Product</th>
-          <th class="py-3 px-4 border-b border-r border-gray-200">Base price</th>
-          <th class="py-3 px-4 border-b border-r border-gray-200">Sale price</th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Warehouse</th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Location</th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Description</th>
           <th class="py-3 px-4 text-center border-b border-gray-200">Action</th> <!-- Last header, no right border -->
         </tr>
         </thead>
@@ -98,21 +95,17 @@
             w-11/12 max-w-2xl
         ">
       <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-280px)] w-full">
-        <h2 class="text-xl font-semibold text-gray-800 mb-6">SKU information</h2>
+        <h2 class="text-xl font-semibold text-gray-800 mb-6">Warehouse information</h2>
 
-        <form id="UpdateSkuForm">
+        <form id="UpdateWarehouseForm">
           <div class="mb-4">
-            <label for="ProductSelect" class="block text-gray-700 text-sm font-medium mb-2">Product</label>
-            <select id="ProductSelect" name="ProductSelect"
-                    class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-full shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200">
-              <option>Iphone</option>
-
-            </select>
+            <label for="warehouseName" class="block text-gray-700 text-sm font-medium mb-2">Warehouse name</label>
+            <input type="text" id="warehouseName" name="warehouseName" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter warehouse name">
           </div>
 
           <div class="mb-4">
-            <label for="skuCode" class="block text-gray-700 text-sm font-medium mb-2">SKU CODE</label>
-            <input type="text" id="skuCode" name="skuCode" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter SKU CODE">
+            <label for="location" class="block text-gray-700 text-sm font-medium mb-2">Location</label>
+            <input type="text" id="location" name="location" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter ">
           </div>
 
           <div class="mb-6">
@@ -120,32 +113,9 @@
             <textarea id="description" name="description" rows="5" class="shadow-sm appearance-none border border-gray-300 rounded-[15px] w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200 resize-y" placeholder="Enter description"></textarea>
           </div>
 
-          <div class="mb-4">
-            <label for="BasePrice" class="block text-gray-700 text-sm font-medium mb-2">Base Price</label>
-            <input type="text" id="BasePrice" name="BasePrice" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter Base price">
-          </div>
-
-          <div class="mb-4">
-            <label for="SalePrice" class="block text-gray-700 text-sm font-medium mb-2">Sale Price</label>
-            <input type="text" id="SalePrice" name="SalePrice" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter Sale price">
-          </div>
-
-
-          <div class="mb-8">
-            <label for="ProductSelect" class="block text-gray-700 text-sm font-medium mb-2">Is Serialized</label>
-            <select id="is_serialized" name="is_serialized"
-                    class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-full shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200">
-              <option value="Y">Yes</option>
-              <option value="N">No</option>
-
-            </select>
-          </div>
-
-
-
           <div class="flex justify-end space-x-4">
             <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Save</button>
-            <button type="button" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Cancel</button>
+            <button type="button" id="cancelButton" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Cancel</button>
           </div>
         </form>
       </div>
@@ -158,6 +128,6 @@
   <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script th:src="@{/js/ajaxhelper.js}"></script>
-  <script th:src="@{/js/sku/sku-list.js}"></script>
+  <script th:src="@{/js/warehouse/warehouse-list.js}"></script>
 
 </section>

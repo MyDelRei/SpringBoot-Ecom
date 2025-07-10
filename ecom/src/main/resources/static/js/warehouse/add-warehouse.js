@@ -1,57 +1,49 @@
 $(document).ready(function () {
-    // Slug auto-generator
-    $('#brandName').on('input', function () {
-        const brandName = $(this).val();
-
-        const slug = brandName
-            .toLowerCase()
-            .replace(/[^a-z0-9\s-]/g, '')   // Remove non-alphanumerics except hyphens
-            .replace(/\s+/g, '-')           // Spaces to hyphens
-            .replace(/^-+|-+$/g, '');       // Trim hyphens
-
-        $('#slug').val(slug);
-    });
-
-    // Submit with confirmation
-    $('#addBrandForm').on('submit', function (e) {
+    $('#addWarehouseForm').on('submit', function (e) {
         e.preventDefault();
 
         Swal.fire({
             title: 'Are you sure?',
-            text: 'Do you want to save this brand?',
+            text: 'Do you want to save this warehouse?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Yes, Save it',
             cancelButtonText: 'No, Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
+                // If user confirms, proceed with AJAX
                 const data = {
-                    name: $('#brandName').val(),
-                    slug: $('#slug').val(),
+                    warehouseName: $('#warehouseName').val(),
+                    location: $('#location').val(),
                     description: $('#description').val()
                 };
 
-                ajaxHelper.post('/api/v1/admin/brands', data,
+                ajaxHelper.post('/api/v1/admin/warehouses', data,
                     function (response) {
                         Swal.fire({
                             title: 'Saved!',
-                            text: 'Brand added successfully.',
+                            text: 'Warehouse added successfully.',
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(() => {
-                            window.location.href = `/brands?success=Brand added successfully.`;
+                            // Optional: redirect after user clicks OK
+                            window.location.href = `/warehouse?success=Successfully added new warehouse`;
                         });
                     },
                     function (err) {
-                        console.error('Add Brand Failed:', err);
+                        console.error('Add Warehouse Failed:', err);
+
                         Swal.fire({
                             title: 'Error!',
-                            text: 'Failed to add brand. Please try again.',
+                            text: 'Failed to add warehouse. Please try again.',
                             icon: 'error',
                             confirmButtonText: 'Close'
                         });
                     }
                 );
+            } else {
+                // User canceled, do nothing
+                console.log('User canceled the operation.');
             }
         });
     });

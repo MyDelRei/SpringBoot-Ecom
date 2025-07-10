@@ -1,6 +1,7 @@
 package org.project.ecom.controller;
 
 import org.project.ecom.model.Sku;
+import org.project.ecom.model.dto.SkuResponseDto;
 import org.project.ecom.service.SkuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -64,4 +65,12 @@ public class SkuController {
       skuService.deleteSku(sku);
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
    }
+
+
+   @GetMapping("/dto")
+   public ResponseEntity<List<SkuResponseDto>> getAllSkuDtos() {
+      List<SkuResponseDto> skuDtos = skuService.getAllSkuDTOs();
+      return new ResponseEntity<>(skuDtos, HttpStatus.OK);
+   }
+
 }

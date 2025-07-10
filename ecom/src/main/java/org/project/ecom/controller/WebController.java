@@ -86,4 +86,31 @@ public class WebController {
         return "layout";
     }
 
+    @GetMapping("/sku/add-sku")
+    public String addSku(Model model, @RequestParam(required = false) String success, HttpServletRequest request) { // Add HttpServletRequest
+        model.addAttribute("pageTitle", "sku page");
+        model.addAttribute("successMessage", success);
+        model.addAttribute("contentFragment", "admin/add-sku");
+        model.addAttribute("currentUri", request.getRequestURI()); // Pass current URI
+        return "layout";
+    }
+
+    @GetMapping("/warehouse")
+    public String showWarehouse(Model model, @RequestParam(required = false) String success, HttpServletRequest request) { // Add HttpServletRequest
+        model.addAttribute("pageTitle", "warehouse page");
+        model.addAttribute("successMessage", success);
+        model.addAttribute("contentFragment", "admin/warehouse-list");
+        model.addAttribute("currentUri", request.getRequestURI()); // Pass current URI
+        return "layout";
+    }
+
+    @GetMapping("/warehouse/add-warehouse")
+    public String addWarehouse(Model model, @RequestParam(required = false) String success, HttpServletRequest request) { // Add HttpServletRequest
+        model.addAttribute("pageTitle", "warehouse page");
+        model.addAttribute("successMessage", success);
+        model.addAttribute("contentFragment", "admin/add-warehouse");
+        model.addAttribute("currentUri", request.getRequestURI()); // Pass current URI
+        return "layout";
+    }
+
 }
