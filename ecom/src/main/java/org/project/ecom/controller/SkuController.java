@@ -12,8 +12,6 @@ import java.util.List;
 
 
 
-
-
 @RestController
 @RequestMapping("/api/v1/admin/sku") // Base path for all Sku related endpoints
 public class SkuController {

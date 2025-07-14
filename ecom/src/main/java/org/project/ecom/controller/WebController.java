@@ -72,11 +72,6 @@ public class WebController {
 
 
 
-
-
-
-
-
     @GetMapping("/sku")
     public String showSku(Model model, @RequestParam(required = false) String success, HttpServletRequest request) { // Add HttpServletRequest
         model.addAttribute("pageTitle", "sku page");
@@ -110,6 +105,23 @@ public class WebController {
         model.addAttribute("successMessage", success);
         model.addAttribute("contentFragment", "admin/add-warehouse");
         model.addAttribute("currentUri", request.getRequestURI()); // Pass current URI
+        return "layout";
+    }
+
+    @GetMapping("/attributes")
+    public String showAttribute(Model model, @RequestParam(required = false) String success, HttpServletRequest request){
+        model.addAttribute("pageTitle", "Attribute page");
+        model.addAttribute( "success message", success);
+        model.addAttribute("contentFragment", "admin/attribute-list");
+        model.addAttribute("currentUri", request.getRequestURI());
+        return "layout";
+    }
+
+    @GetMapping("/attributes/add-attributes")
+    public String AddAttribute(Model model, HttpServletRequest request){
+        model.addAttribute("pageTitle", "Attribute page");
+        model.addAttribute("contentFragment", "admin/add-attribute");
+        model.addAttribute("currentUri", request.getRequestURI());
         return "layout";
     }
 

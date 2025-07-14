@@ -25,7 +25,7 @@
         <i class="fas fa-chevron-down text-xs ml-auto transition-transform duration-200 group-[.open]:rotate-180"></i>
       </a>
       <div class="product-menu pl-8 mt-1 space-y-1"
-           th:classappend="${currentUri.startsWith('/brands') || currentUri.startsWith('/category') || currentUri.startsWith('/product') || currentUri.startsWith('/sku')  ? 'block' : 'hidden'}">
+           th:classappend="${currentUri.startsWith('/brands') || currentUri.startsWith('/category') || currentUri.startsWith('/product') || currentUri.startsWith('/attributes') || currentUri.startsWith('/sku')  ? 'block' : 'hidden'}">
         <a th:href="@{/brands}"
            th:classappend="${currentUri == '/brands' || currentUri == '/brands/add-brand' ? 'bg-indigo-100 text-indigo-700 font-semibold' : ''}"
            class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">Brand</a>
@@ -34,7 +34,8 @@
            class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">Category</a>
         <a th:href="@{/product}" th:classappend="${currentUri == '/product' || currentUri == '/product/add-product' ? 'bg-indigo-100 text-indigo-700 font-semibold' : ''}"
            class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">Product</a>
-        <a href="#" class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">Attribute</a>
+        <a th:href="@{/attributes}" th:classappend="${currentUri == '/attributes' || currentUri == '/attributes/add-attributes' ? 'bg-indigo-100 text-indigo-700 font-semibold' : ''}"
+           class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">Attribute</a>
         <a th:href="@{/sku}"
            th:classappend="${currentUri == '/sku' || currentUri == '/sku/add-sku' ? 'bg-indigo-100 text-indigo-700 font-semibold' : ''}"
            class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">SKU</a>
