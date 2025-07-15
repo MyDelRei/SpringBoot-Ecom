@@ -1,0 +1,82 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-[33px] font-bold text-gray-800">Supplier List</h1>
+    <button class="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-full shadow-lg transition duration-200">
+      + Add Sku
+    </button>
+  </div>
+
+  <!-- Search Input Below Add Sku -->
+  <div class="mb-6">
+    <input type="text" id="searchInput" placeholder="Search suppliers..." class="w-full max-w-md rounded-full border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm">
+  </div>
+
+  <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white rounded-xl overflow-hidden">
+        <!-- <thead class="bg-indigo-50 text-indigo-700 text-sm font-semibold"> -->
+        <tr>
+          <th class="px-6 py-4 text-left"></th>
+          <th class="px-6 py-4 text-left">Supplier Name</th>
+          <th class="px-6 py-4 text-left">Email</th>
+          <th class="px-6 py-4 text-left">Phone</th>
+          <th class="px-6 py-4 text-left">Address</th>
+
+          <th class="px-6 py-4 text-center">Actions</th>
+        </tr>
+        </thead>
+        <tbody class="text-sm text-gray-700" id="supplierTableBody">
+        <!-- Example Supplier Row -->
+        <tr class="border-t hover:bg-gray-50 transition">
+          <td class="px-6 py-4"><input type="checkbox" class="rounded"></td>
+          <td class="px-6 py-4">ABC Supplier Co.</td>
+          <td class="px-6 py-4">abc@example.com</td>
+          <td class="px-6 py-4">012 345 678</td>
+          <td class="px-6 py-4">Phnom Penh, Cambodia</td>
+
+          <td class="px-6 py-4 text-center space-x-2">
+            <a href="edit-supplier.html" class="inline-block p-2 text-blue-500 hover:text-blue-700 transition">
+              <i class="fas fa-edit"></i>
+            </a>
+            <button class="inline-block p-2 text-red-500 hover:text-red-700 transition" onclick="confirm('Are you sure you want to delete?')">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        <tr class="border-t hover:bg-gray-50 transition">
+          <td class="px-6 py-4"><input type="checkbox" class="rounded"></td>
+          <td class="px-6 py-4">XYZ Corp</td>
+          <td class="px-6 py-4">xyz@example.com</td>
+          <td class="px-6 py-4">012 345 679</td>
+          <td class="px-6 py-4">Siem Reap, Cambodia</td>
+
+          <td class="px-6 py-4 text-center space-x-2">
+            <a href="edit-supplier.html" class="inline-block p-2 text-blue-500 hover:text-blue-700 transition">
+              <i class="fas fa-edit"></i>
+            </a>
+            <button class="inline-block p-2 text-red-500 hover:text-red-700 transition" onclick="confirm('Are you sure you want to delete?')">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="flex justify-between items-center mt-6">
+      <span class="text-sm text-gray-600"></span>
+      <div class="flex space-x-2">
+        <button class="p-2 rounded-full hover:bg-gray-200"><i class="fas fa-chevron-left"></i></button>
+        <button class="p-2 rounded-full bg-indigo-500 text-white">1</button>
+        <button class="p-2 rounded-full hover:bg-gray-200">2</button>
+        <button class="p-2 rounded-full hover:bg-gray-200">...</button>
+        <button class="p-2 rounded-full hover:bg-gray-200">5</button>
+        <button class="p-2 rounded-full hover:bg-gray-200"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script th:src="@{/js/ajaxhelper.js}"></script>
+  <script th:src="@{/js/supplier/List_Supplier.js}"></script>
+
+</section>
