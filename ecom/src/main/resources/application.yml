@@ -1,0 +1,19 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:XE
+    username: ECOM_Project
+    password: 1212
+    driver-class-name: oracle.jdbc.OracleDriver
+
+
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    database-platform: org.hibernate.dialect.OracleDialect
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+

@@ -1,0 +1,30 @@
+
+<header th:fragment="header"
+        class="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 shadow-sm" xmlns:th="">
+
+  <div class="flex items-center space-x-0">
+
+
+    <div class="relative flex-grow max-w-lg">
+            <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                <i class="fas fa-search text-gray-400"></i>
+            </span>
+      <input type="text" placeholder="Search" class="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-gray-100 text-sm">
+      <span class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 text-xs">⌘K</span>
+    </div>
+  </div>
+
+
+  <div class="flex items-center space-x-4 ml-auto">
+    <button class="text-gray-500 hover:text-gray-900 focus:outline-none rounded-full p-2 hover:bg-gray-100 transition duration-200">
+      <i class="fab fa-github text-lg"></i>
+    </button>
+    <button class="text-gray-500 hover:text-gray-900 focus:outline-none rounded-full p-2 hover:bg-gray-100 transition duration-200">
+      <i class="fas fa-sun text-lg"></i>
+    </button>
+    <button class="text-gray-500 hover:text-gray-900 focus:outline-none rounded-full p-2 hover:bg-gray-100 transition duration-200">
+      <i class="fas fa-cog text-lg"></i>
+    </button>
+    <img src="https://placehold.co/40x40/6366f1/ffffff?text=JD" alt="User Avatar" class="h-10 w-10 rounded-full border-2 border-indigo-500">
+  </div>
+</header>
