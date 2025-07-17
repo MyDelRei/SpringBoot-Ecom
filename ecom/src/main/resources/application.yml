@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
 spring:
   datasource:
     url: jdbc:oracle:thin:@localhost:1521:XE
@@ -17,3 +17,10 @@ spring:
     enabled: true
     locations: classpath:db/migration
 
+jwt:
+  secret: fK93uNs@7$wLp!zE4^tYvP2d#MqXa8RJbGo0nB5HcLmKcX1UoWr9SzYqTdAeV6Jv
+  expirationMs: 86400000
+
+logging:
+  level:
+    org.springframework.security: DEBUG
