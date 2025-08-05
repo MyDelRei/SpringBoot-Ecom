@@ -21,22 +21,11 @@ public class WarehouseController {
    }
 
 
-
-
-
-
    @GetMapping
    public ResponseEntity<List<Warehouse>> getAllWarehouses() {
       List<Warehouse> warehouses = warehouseService.getAllWarehouse();
       return ResponseEntity.ok(warehouses);
    }
-
-
-
-
-
-
-
    @GetMapping("/{id}")
    public ResponseEntity<Warehouse> getWarehouseById(@PathVariable Long id) {
 
@@ -47,9 +36,6 @@ public class WarehouseController {
       Warehouse warehouse = warehouseService.getWarehouseById(model);
       return ResponseEntity.ok(warehouse);
    }
-
-
-
 
 
 

@@ -10,7 +10,7 @@ $(document).ready(function() {
         // If you have a search term, append it as a query parameter
         const url = searchTerm ? `/api/suppliers?search=${encodeURIComponent(searchTerm)}` : '/api/suppliers';
 
-        ajaxRequest(url, 'GET')
+        ajaxRequest(url,'GET')
             .then(suppliers => {
                 renderSuppliers(suppliers);
             })
@@ -84,6 +84,6 @@ $(document).ready(function() {
 
     // Event listener for "Add Sku" button - change it to "Add Supplier"
     $('.bg-indigo-500.hover\\:bg-indigo-600.text-white.font-medium.py-2.px-4.rounded-full.shadow-lg.transition.duration-200').on('click', function() {
-        window.location.href = 'add-supplier.html'; // Navigate to your add supplier page
+        window.location.href = 'list-supplier.html'; // Navigate to your add supplier page
     });
 });

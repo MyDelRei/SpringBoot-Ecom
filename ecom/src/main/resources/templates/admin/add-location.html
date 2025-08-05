@@ -1,0 +1,49 @@
+<!--<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">-->
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto" xmlns:th="http://www.thymeleaf.org">
+
+  <h1 class="text-2xl font-semibold text-gray-800 mb-6">Add Location</h1>
+
+  <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
+    <h2 class="text-xl font-semibold text-gray-800 mb-6">Location Information</h2>
+
+    <form id="addLocationForm" class="space-y-4">
+      <div class="mb-4">
+        <label for="warehouseId" class="block text-gray-700 text-sm font-medium mb-2">Warehouse ID</label>
+        <input type="number" id="warehouseId" name="warehouseId" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200" placeholder="Enter Warehouse ID">
+      </div>
+
+      <div class="mb-4">
+        <label for="section" class="block text-gray-700 text-sm font-medium mb-2">Section</label>
+        <input type="text" id="section" name="section" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200" placeholder="Enter Section">
+      </div>
+
+      <div class="mb-4">
+        <label for="aisle" class="block text-gray-700 text-sm font-medium mb-2">Aisle</label>
+        <input type="text" id="aisle" name="aisle" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200" placeholder="Enter Aisle">
+      </div>
+
+      <div class="mb-4">
+        <label for="bin" class="block text-gray-700 text-sm font-medium mb-2">Bin</label>
+        <input type="number" id="bin" name="bin" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200" placeholder="Enter Bin">
+      </div>
+
+      <div class="mb-6">
+        <label for="note" class="block text-gray-700 text-sm font-medium mb-2">Note</label>
+        <input type="text" id="note" name="note" class="shadow-sm appearance-none border border-gray-300 rounded-[15px] w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200" placeholder="Enter Note (optional)">
+      </div>
+
+      <div class="flex justify-end space-x-4">
+        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Save</button>
+        <button type="reset" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+
+  <th:script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:src="@{/js/ajaxhelper.js}"></script>
+    <script th:src="@{/js/location/add-location.js}"></script>
+  </th:script>
+</section>

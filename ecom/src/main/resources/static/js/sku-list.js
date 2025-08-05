@@ -141,7 +141,7 @@ $(document).ready(function () {
                 brand.name.toLowerCase().includes(term) ||
                 brand.slug.toLowerCase().includes(term) ||
                 brand.description.toLowerCase().includes(term)
-            );
+             );
         }
 
         filteredBrands.sort((a, b) => {

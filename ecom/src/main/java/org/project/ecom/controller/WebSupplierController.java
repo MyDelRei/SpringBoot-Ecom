@@ -16,5 +16,12 @@ public class WebSupplierController {
       model.addAttribute("currentUri", request.getRequestURI()); // Pass current URI
       return "layout";
    }
-
+   @GetMapping("/show-supplier")
+   public String showSupplier(Model model, @RequestParam(required = false) String success, HttpServletRequest request){
+      model.addAttribute("pageTitle", "Supplier page");
+      model.addAttribute( "success message", success);
+      model.addAttribute("contentFragment", "admin/list-supplier");
+      model.addAttribute("currentUri", request.getRequestURI());
+      return "layout";
+   }
 }

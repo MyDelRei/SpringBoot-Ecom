@@ -31,8 +31,6 @@ public class WarehouseService {
        }
 
    }
-
-
    public Warehouse updateWarehouse(Warehouse model){
        try{
            Warehouse warehouseModel = warehouseRepository.findById(model.getWarehouseId()).orElseThrow(() -> new RuntimeException("Warehouse not found"));

@@ -124,5 +124,23 @@ public class WebController {
         model.addAttribute("currentUri", request.getRequestURI());
         return "layout";
     }
+    @GetMapping("/locations")
+    public String showLocations(Model model, @RequestParam(required = false) String success, HttpServletRequest request) {
+        model.addAttribute("pageTitle", "locations page");
+        model.addAttribute("successMessage", success);
+        model.addAttribute("contentFragment", "admin/location-lists"); // ✅ must match file path + fragment name
+        model.addAttribute("currentUri", request.getRequestURI());
+        return "layout"; // ✅ loads layout.html
+    }
+
+    @GetMapping("/locations/add-location")
+    public String addLocations(Model model, @RequestParam(required = false) String success, HttpServletRequest request) { // Add HttpServletRequest
+        model.addAttribute("pageTitle", "add locations page");
+        model.addAttribute("successMessage", success);
+        model.addAttribute("contentFragment", "admin/add-location");
+        model.addAttribute("currentUri", request.getRequestURI()); // Pass current URI
+        return "layout";
+    }
+
 
 }
