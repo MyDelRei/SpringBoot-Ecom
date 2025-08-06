@@ -1,0 +1,157 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+  <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
+    <h1 class="text-[33px] font-bold text-gray-800 mb-3 mt-3">Add Attribute</h1>
+    <div class="flex-1 flex flex-col md:flex-row gap-[100px] p-6">
+      <!-- Left form panel -->
+      <section
+              class="rounded-2xl border border-gray-100 shadow-md p-8 flex-1 max-w-xxl flex flex-col bg-white"
+      >
+        <form
+                id="addSkuAttrToProductForm"
+                action="#"
+                class="flex flex-col gap-6 flex-grow"
+        >
+          <fieldset class="space-y-2">
+            <legend class="text-lg font-semibold text-gray-800 mb-3">
+              Fill Information
+            </legend>
+
+            <div class="flex flex-col gap-4">
+              <!-- Change: SKU Code select instead of product name -->
+              <label for="SkuCodeSelect" class="block">
+                <select
+                        id="SkuCodeSelect"
+                        name="SkuCodeSelect"
+                        class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-full shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
+                >
+                  <option value="">-- Select SKU Code --</option>
+                </select>
+              </label>
+
+              <!-- Product name auto-filled -->
+              <label for="ProductName" class="block">
+                <input
+                        id="ProductName"
+                        name="ProductName"
+                        type="text"
+                        class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-full shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
+                        readonly
+                        placeholder="Product Name"
+                />
+              </label>
+
+              <label class="block">
+                <select
+                        class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-full shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
+                        name="attribute"
+                        id="AttributeSelect"
+                >
+                  <option value="">-- Select Attribute --</option>
+                </select>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="flex items-center gap-3">
+            <input
+                    id="attributeValue"
+                    type="text"
+                    placeholder="Value"
+                    class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
+            />
+            <button
+                    type="button"
+                    class="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-full shadow-lg transition duration-200 cursor-pointer"
+                    id="btnAddAttribute"
+            >
+              Add
+            </button>
+          </div>
+
+          <div
+                  class="overflow-x-auto rounded-2xl border border-gray-200 shadow-sm"
+          >
+            <table
+                    class="min-w-full text-left text-sm font-light text-gray-700"
+            >
+              <thead class="border-b border-gray-200 bg-gray-50 font-medium">
+              <tr>
+                <th class="pl-6 pr-3 py-3 w-6">
+                  <input
+                          type="checkbox"
+                          aria-label="Select all rows"
+                          class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                  />
+                </th>
+                <th class="px-3 py-3">Product</th>
+                <th class="px-3 py-3">Sku code</th>
+                <th class="px-3 py-3">Attribute</th>
+                <th class="px-3 py-3">Value</th>
+                <th class="px-3 py-3 text-center">Action</th>
+              </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+              <!-- data goes here -->
+              </tbody>
+            </table>
+          </div>
+
+          <button
+                  type="submit"
+                  class="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-full shadow-lg transition duration-200 cursor-pointer w-full shadow-md transition focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            Save
+          </button>
+        </form>
+      </section>
+
+      <!-- Right product preview -->
+      <section
+              class="right-product-preview rounded-2xl border border-gray-100 shadow-md max-w-md w-full p-6 flex flex-col items-center gap-6 bg-white"
+      >
+        <div
+                class="w-full aspect-[3/4] rounded-xl overflow-hidden bg-gray-100 drop-shadow-sm"
+        >
+          <img
+                  src=""
+                  alt="Image of product"
+                  class="w-full h-full object-cover"
+                  onerror="this.onerror=null;this.src='https://placehold.co/600x400/EEE/31343C';"
+          />
+        </div>
+        <div
+                class="w-full flex justify-between items-center text-gray-900 font-semibold text-lg"
+        >
+          <span class="product-name">Product name</span>
+          <span class="product-price text-2xl">$0</span>
+        </div>
+        <p class="product-description text-gray-600 text-sm leading-relaxed">
+          <!-- Description -->
+        </p>
+        <button
+                id="detail-sku-att"
+                class="w-full bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-full shadow-lg transition duration-200 cursor-pointer"
+        >
+          View full &nbsp;<svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="inline-block h-5 w-5 -mt-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+        >
+          <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 5l7 7-7 7"
+          />
+        </svg>
+        </button>
+      </section>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script th:src="@{/js/ajaxhelper.js}"></script>
+  <script th:src="@{/js/skuAttribute/add-sku-att.js}"></script>
+</section>

@@ -1,0 +1,226 @@
+
+/* Basic body styles for font and background */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+body {
+    font-family: 'Inter', sans-serif; /* Sets the primary font to Inter, with sans-serif as a fallback */
+    background-color: #f3f4f6; /* Sets a light grey background color for the entire page */
+}
+
+/* Custom scrollbar styles for the sidebar */
+.sidebar::-webkit-scrollbar {
+    width: 8px; /* Sets the width of the scrollbar */
+}
+.sidebar::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Color of the scrollbar track (the area the thumb slides on) */
+    border-radius: 10px; /* Rounds the corners of the scrollbar track */
+}
+.sidebar::-webkit-scrollbar-thumb {
+    background: #cbd5e1; /* Color of the scrollbar thumb (the draggable part) */
+    border-radius: 10px; /* Rounds the corners of the scrollbar thumb */
+}
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; /* Color of the scrollbar thumb when hovered over */
+}
+
+/* Styles for the active navigation item wrapper */
+.nav-item-wrapper.active {
+    position: relative; /* Essential for positioning the '::after' pseudo-element relative to this wrapper */
+}
+
+/* Styles for the blue indicator bar on the right of the active navigation item */
+.nav-item-wrapper.active::after {
+    content: ''; /* Required for pseudo-elements, even if empty */
+    position: absolute; /* Positions the pseudo-element absolutely within its relative parent (.nav-item-wrapper.active) */
+    right: 0; /* Aligns the pseudo-element to the right edge of the parent */
+    top: 4px; /* Positions the pseudo-element 4px from the top of the parent */
+    bottom: 4px; /* Positions the pseudo-element 4px from the bottom of the parent */
+    width: 4px; /* Sets the width of the blue indicator bar */
+    background-color: #4f46e5; /* Sets the blue color of the indicator bar */
+    border-top-left-radius: 2px; /* Rounds the top-left corner of the indicator bar */
+    border-bottom-left-radius: 2px; /* Rounds the bottom-left corner of the indicator bar */
+}
+
+/* General styles for all navigation links */
+.nav-link {
+    width: 200px; /* Sets a fixed width for the navigation links */
+    transition: background-color 200ms ease-in-out; /* Adds a smooth transition effect for background color changes */
+}
+
+/* Styles for the navigation link when its parent wrapper is active (e.g., Dashboard, or a parent like 'Product') */
+.nav-item-wrapper.active .nav-link {
+    background-color: #e0e7ff; /* Sets a light indigo background for the active link */
+    color: #4f46e5; /* Sets a darker indigo text color for the active link */
+}
+
+/* NEW ADDITION: Style for a nav-link when it directly has the 'active' class.
+   This is useful for submenu items (like 'Brand') where 'active' is applied directly to the <a> tag,
+   or if you decide to apply 'active' to top-level 'nav-link's directly instead of their wrappers. */
+.nav-link.active {
+    background-color: #e0e7ff; /* Ensures light indigo background */
+    color: #4f46e5; /* Ensures darker indigo text */
+    /* You might also add font-weight here if desired */
+    font-weight: 600;
+}
+
+
+/* Styles for navigation links when their parent wrapper is NOT active, and the link is hovered */
+.nav-item-wrapper:not(.active) .nav-link:hover {
+    background-color: #e5e7eb; /* Sets a very light grey background when a non-active link is hovered */
+}
+
+/* Styles for the overlay backdrop (the dark, blurred background when a modal/overlay is open) */
+.overlay-backdrop {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black backdrop (50% opacity) */
+    backdrop-filter: blur(5px); /* Optional: Applies a blur effect to content behind the backdrop */
+    overflow-y: auto; /* Allows vertical scrolling within the overlay if content exceeds viewport height */
+    -webkit-overflow-scrolling: touch; /* Improves scrolling performance on iOS devices */
+}
+
+/* Styles for the content wrapper within the overlay */
+.overlay-content-wrapper {
+    height: 100%; /* Ensures the content wrapper takes full height of its parent (the overlay-backdrop) */
+    width: 100%; /* Ensures the content wrapper takes full width of its parent */
+    display: flex; /* Enables Flexbox for layout within the wrapper */
+    justify-content: center; /* Horizontally centers the overlay content */
+    align-items: flex-start; /* Aligns the overlay content to the top vertically */
+    padding-top: 40px; /* Adds padding at the top of the content, creating space from the top of the viewport when slid down */
+    padding-bottom: 40px; /* Adds padding at the bottom for consistent spacing */
+    box-sizing: border-box; /* Ensures padding is included in the element's total height/width calculation */
+}
+
+/* Custom styles for hidden dropdowns */
+.dropdown-menu.hidden {
+    display: none;
+}
+/* Transition for sidebar width */
+.sidebar-transition {
+    transition: width 0.3s ease-in-out;
+}
+/* Transition for content margin */
+.content-transition {
+    transition: margin-left 0.3s ease-in-out;
+}
+/* Styles for dropdown menus when sidebar is collapsed and menu is open */
+.dropdown-menu.collapsed-open {
+    position: absolute;
+    left: 100%; /* Position right next to the collapsed sidebar */
+    top: 0; /* Align with the top of the parent li */
+    width: 200px; /* Adjust width as needed for your content */
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* shadow-lg */
+    border-radius: 0.5rem; /* rounded-lg */
+    padding: 0.5rem; /* p-2 */
+    z-index: 50; /* Ensure it's above other content */
+    margin-left: 0 !important; /* Override ml-8 */
+}
+/* Explicitly apply ml-8 when not collapsed-open for consistent nesting */
+.dropdown-menu:not(.collapsed-open) {
+    margin-left: 2rem; /* Tailwind's ml-8 equivalent */
+}
+/* Custom table styles for outline effect */
+.outline-table {
+    border-collapse: collapse; /* Collapse borders for a clean outline */
+    width: 100%;
+}
+.outline-table th,
+.outline-table td {
+    border: 1px solid #e2e8f0; /* Light gray border for all sides */
+    padding: 8px 16px; /* Padding inside cells */
+    text-align: left; /* Default text alignment */
+}
+.outline-table thead th {
+    background-color: #f8fafc; /* Slightly different background for header */
+    font-weight: 500; /* Medium font weight for headers */
+    color: #4a5568; /* Darker gray text color */
+}
+/* Material-like input focus style */
+.material-input:focus {
+    border-color: #2196f3; /* Material Blue */
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2); /* Light blue shadow */
+    outline: none;
+}
+
+/* Custom Colors based on #5864BB */
+:root {
+    --primary-button-bg: #5864BB;
+    --primary-button-hover-bg: #4450A7; /* Darker shade of #5864BB */
+    --sidebar-active-bg: #DBDFEF; /* Lighter shade for active sidebar item background */
+    --sidebar-active-text: #5864BB; /* Text color for active sidebar item */
+    --sidebar-hover-bg: #C6CDDE; /* Slightly darker shade for sidebar hover */
+}
+
+/* Apply custom button styles */
+.btn-custom-primary {
+    background-color: var(--primary-button-bg);
+    color: white;
+    transition: background-color 0.3s ease;
+}
+.btn-custom-primary:hover {
+    background-color: var(--primary-button-hover-bg);
+}
+
+/* Apply custom styles to sidebar navigation links */
+.nav-link-active {
+    background-color: var(--sidebar-active-bg);
+    color: var(--sidebar-active-text);
+}
+.nav-link-active:hover {
+    background-color: var(--sidebar-hover-bg);
+    color: var(--sidebar-active-text); /* Keep text color for contrast */
+}
+.nav-link-default:hover {
+    background-color: var(--sidebar-hover-bg);
+}
+
+/* Custom style for "Add" button */
+.btn-add-custom {
+    background-color: var(--sidebar-active-bg);
+    color: var(--sidebar-active-text);
+    transition: background-color 0.3s ease;
+}
+.btn-add-custom:hover {
+    background-color: var(--sidebar-hover-bg);
+}
+
+/* Custom style for "Edit" button (text color) */
+.btn-edit-custom {
+    color: var(--primary-button-bg);
+    transition: color 0.3s ease;
+}
+.btn-edit-custom:hover {
+    color: var(--primary-button-hover-bg);
+}
+
+
+#qrOverlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#qrOverlay > div {
+    position: relative;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 300px;
+    text-align: center;
+}
+#invoiceReceipt {
+    width: 190mm; /* Slightly smaller than A4 width (210mm) to fit margins */
+    min-height: 277mm; /* height minus margins */
+    padding: 10mm 15mm; /* padding inside */
+    background: white;
+    color: #000;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* Use page-breaks if needed */
+.page-break {
+    page-break-before: always;
+}

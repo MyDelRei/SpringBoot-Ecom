@@ -1,0 +1,92 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+    <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
+        <h1 class="text-[33px] font-bold text-gray-800 mb-3 mt-3">Removing</h1>
+
+        <div class="flex flex-col gap-6 p-6">
+            <section class="rounded-2xl border border-gray-100 shadow-md p-8 bg-white w-full">
+
+                <form id="addSkuAttrToProductForm" class="flex flex-col gap-6">
+                    <fieldset class="space-y-2">
+                        <legend class="text-lg font-semibold text-gray-800 mb-3">Removing Attribute</legend>
+
+                        <div class="flex flex-col gap-4">
+                            <label class="block">
+                                <select
+                                        id="ProductSelect" name="productName"
+                                        class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-full shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
+                                >
+                                    <option value="">Product Name</option>
+                                </select>
+                            </label>
+
+                            <label class="block">
+                                <input
+                                        type="text" id="skucode" placeholder="Sku code"
+                                        class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
+                                        readonly
+                                />
+                            </label>
+
+                            <label class="block">
+<!--                                <select-->
+<!--                                        id="AttributeSelect" name="attribute"-->
+<!--                                        class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-full shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"-->
+<!--                                >-->
+<!--                                    <option value="">Attribute name</option>-->
+<!--                                </select>-->
+                            </label>
+                        </div>
+                    </fieldset>
+
+<!--                    <div class="flex items-center gap-3">-->
+<!--                        <input-->
+<!--                                type="text" id="attributeValue" placeholder="Value"-->
+<!--                                class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"-->
+<!--                        />-->
+<!--                        <button-->
+<!--                                type="button" id="btnAddAttribute"-->
+<!--                                class="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-full shadow-lg transition duration-200 cursor-pointer"-->
+<!--                        >-->
+<!--                            Add-->
+<!--                        </button>-->
+<!--                    </div>-->
+
+                    <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+                        <table class="min-w-full text-left text-sm font-light text-gray-700">
+                            <thead class="border-b border-gray-200 bg-gray-50 font-medium">
+                            <tr>
+                                <th class="pl-6 pr-3 py-3 w-6">
+                                    <input
+                                            type="checkbox" aria-label="Select all rows"
+                                            class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    />
+                                </th>
+                                <th class="px-3 py-3">Product</th>
+                                <th class="px-3 py-3">Sku code</th>
+                                <th class="px-3 py-3">Attribute</th>
+                                <th class="px-3 py-3">Value</th>
+                                <th class="px-3 py-3 text-center">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-100">
+                            <!-- Rows inserted by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <button
+                            type="submit"
+                            class="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-full shadow-lg transition duration-200 cursor-pointer w-full shadow-md transition focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    >
+                        Save
+                    </button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:src="@{/js/ajaxhelper.js}"></script>
+    <script th:src="@{/js/skuAttribute/update-sku-att.js}"></script>
+</section>

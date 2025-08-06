@@ -1,0 +1,133 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+  <div class="flex items-center justify-between space-y-6">
+    <h1 class="text-[33px] font-bold text-gray-800 mb-6">Warehouse page</h1>
+    <div th:if="${successMessage}" role="alert" class="mb-4 relative flex w-[400px] p-3 text-sm text-white bg-blue-600 rounded-md">
+      <span th:text="${successMessage}">Warehouse created successfully!</span>
+      <button class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5" type="button" onclick="this.parentElement.remove()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main content div with 30px rounded corners -->
+  <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
+    <!-- Top Section: My warehouse, Add warehouse, Search, Filter -->
+    <div class="flex flex-col justify-between mb-6 space-y-4 md:space-y-0">
+      <div class="flex justify-between mb-6 space-y-4 md:space-y-0">
+        <h2 class="text-[27px] font-semibold text-gray-800">Warehouse</h2>
+        <!-- Add Warehouse Button -->
+        <a th:href="@{/warehouse/add-warehouse}" class="bg-indigo-600 hover:bg-indigo-700 w-[210px] text-white font-semibold py-2 px-4 rounded-full shadow-md flex items-center justify-start transition duration-200">
+          <i class="fas fa-plus mr-2"></i> Add Warehouse
+        </a>
+      </div>
+
+      <div class="flex justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full md:w-auto">
+        <!-- Dropdown Filter -->
+        <div class="relative w-full sm:w-auto">
+          <select id="sort-table" class="block w-[200px] py-2 px-4 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm appearance-none">
+            <option value="warehouseName">Warehouse</option>
+            <option value="location">Location</option>
+            <option value="description">Description</option>
+          </select>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative flex-grow sm:flex-grow-0 w-full sm:w-64">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                                    <i class="fas fa-search text-gray-600"></i>
+                                </span>
+          <input type="text" id="search" placeholder="Search" class="w-full pl-10 pr-4 py-2 rounded-full shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white text-sm">
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- Warehouse List Table -->
+    <div class="overflow-x-auto rounded-[20px] border border-gray-200"> <!-- Outer border and rounded corners for the table container -->
+      <table class="min-w-full bg-white">
+        <thead>
+        <tr class="bg-gray-50 text-gray-700 text-left text-sm font-medium">
+          <th class="py-3 px-4 border-b border-r border-gray-200"> <!-- Border-b for bottom, border-r for right -->
+            <div class="inline-flex items-center">
+              <label class="flex items-center cursor-pointer relative">
+                <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="check7" />
+                <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                              </svg>
+                                              </span>
+              </label>
+            </div>
+          </th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Warehouse</th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Location</th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Description</th>
+          <th class="py-3 px-4 text-center border-b border-gray-200">Action</th> <!-- Last header, no right border -->
+        </tr>
+        </thead>
+        <tbody>
+        <!--data goes here-->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div id="pagination" class="flex items-center justify-end mt-6 space-x-1 text-gray-600"></div>
+
+  </div>
+
+
+  <!--overlay-->
+  <div id="myOverlay" class="
+        fixed inset-0 z-50
+        flex items-start justify-center
+        overlay-backdrop
+        transition-all duration-500 ease-in-out
+        invisible opacity-0
+    ">
+    <div class="
+            overlay-content-wrapper
+            transform -translate-y-full
+            transition-transform duration-500 ease-in-out
+            w-11/12 max-w-2xl
+        ">
+      <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-280px)] w-full">
+        <h2 class="text-xl font-semibold text-gray-800 mb-6">Warehouse information</h2>
+
+        <form id="UpdateWarehouseForm">
+          <div class="mb-4">
+            <label for="warehouseName" class="block text-gray-700 text-sm font-medium mb-2">Warehouse name</label>
+            <input type="text" id="warehouseName" name="warehouseName" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter warehouse name">
+          </div>
+
+          <div class="mb-4">
+            <label for="location" class="block text-gray-700 text-sm font-medium mb-2">Location</label>
+            <input type="text" id="location" name="location" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter ">
+          </div>
+
+          <div class="mb-6">
+            <label for="description" class="block text-gray-700 text-sm font-medium mb-2">Description</label>
+            <textarea id="description" name="description" rows="5" class="shadow-sm appearance-none border border-gray-300 rounded-[15px] w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200 resize-y" placeholder="Enter description"></textarea>
+          </div>
+
+          <div class="flex justify-end space-x-4">
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Save</button>
+            <button type="button" id="cancelButton" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script th:src="@{/js/ajaxhelper.js}"></script>
+  <script th:src="@{/js/warehouse/warehouse-list.js}"></script>
+
+</section>

@@ -1,0 +1,170 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+  <div class="flex items-center justify-between space-y-6">
+    <h1 class="text-[33px] font-bold text-gray-800 mb-6">Supplier page</h1>
+    <div th:if="${successMessage}" role="alert" class="mb-4 relative flex w-[400px] p-3 text-sm text-white bg-blue-600 rounded-md">
+      <span th:text="${successMessage}">Supplier created successfully!</span>
+      <button class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5" type="button" onclick="this.parentElement.remove()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main content div with 30px rounded corners -->
+  <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
+    <!-- Top Section: My supplier, Add supplier, Search, Filter -->
+    <div class="flex flex-col justify-between mb-6 space-y-4 md:space-y-0">
+      <div class="flex justify-between mb-6 space-y-4 md:space-y-0">
+        <h2 class="text-[27px] font-semibold text-gray-800">My supplier</h2>
+        <!-- Add Supplier Button -->
+        <a th:href="@{/supplier/add-supplier}" class="bg-indigo-600 hover:bg-indigo-700 w-[210px] text-white font-semibold py-2 px-4 rounded-full shadow-md flex items-center justify-start transition duration-200">
+          <i class="fas fa-plus mr-2"></i> Add supplier
+        </a>
+      </div>
+
+      <div class="flex justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full md:w-auto">
+        <!-- Dropdown Filter -->
+        <div class="relative w-full sm:w-auto">
+          <select id="sort-table" class="block w-[200px] py-2 px-4 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm appearance-none">
+            <option>Title</option>
+            <option>Supplier Name</option>
+            <option>Slug</option>
+            <option>Description</option>
+          </select>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative flex-grow sm:flex-grow-0 w-full sm:w-64">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                                    <i class="fas fa-search text-gray-600"></i>
+                                </span>
+          <input type="text" id="search" placeholder="Search" class="w-full pl-10 pr-4 py-2 rounded-full shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white text-sm">
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- Supplier List Table -->
+    <div class="overflow-x-auto rounded-[20px] border border-gray-200"> <!-- Outer border and rounded corners for the table container -->
+      <table class="min-w-full bg-white">
+        <thead>
+        <tr class="bg-gray-50 text-gray-700 text-left text-sm font-medium">
+          <th class="py-3 px-4 border-b border-r border-gray-200"> <!-- Border-b for bottom, border-r for right -->
+            <div class="inline-flex items-center">
+              <label class="flex items-center cursor-pointer relative">
+                <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="check7" />
+                <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                              </svg>
+                                              </span>
+              </label>
+            </div>
+          </th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Supplier Name</th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Phone</th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Email</th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Address</th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Product</th>
+          <th class="py-3 px-4 text-center border-b border-gray-200">Action</th> <!-- Last header, no right border -->
+        </tr>
+        </thead>
+        <tbody>
+        <!--data goes here-->
+        <tr class="border-b border-gray-200 hover:bg-gray-50">
+          <td class="py-3 px-4 border-r border-gray-200">
+            <div class="inline-flex items-center">
+              <label class="flex items-center cursor-pointer relative">
+                <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="check-${brand.brandId}" />
+                <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </span>
+              </label>
+            </div>
+          </td>
+          <td class="py-3 px-4 border-r border-gray-200">Apple INC</td>
+          <td class="py-3 px-4 border-r border-gray-200">018725323</td>
+          <td class="py-3 px-4 border-r border-gray-200 max-w-[350px] whitespace-nowrap overflow-hidden text-ellipsis">Illi@rest.com</td>
+          <td class="py-3 px-4 border-r border-gray-200 max-w-[350px] whitespace-nowrap overflow-hidden text-ellipsis">Location of that supplier</td>
+          <td class="py-3 px-4 border-r border-gray-200 max-w-[350px] whitespace-nowrap overflow-hidden text-ellipsis">
+            <button class="show-more-btn h-[32px] px-3 py-1 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition-colors">Show more</button>
+          </td>
+          <td class="py-3 px-4 text-center space-x-2">
+            <button id="edit-brand" class="text-blue-500 hover:text-blue-700 p-2 rounded-full hover:bg-blue-100 transition duration-200"
+                    data-id="${brand.brandId}" data-name="${brand.name}" data-slug="${brand.slug}" data-description="${brand.description}">
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+            <button id="delete-brand" class="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition duration-200"
+                    data-id="${brand.brandId}">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div id="pagination" class="flex items-center justify-end mt-6 space-x-1 text-gray-600"></div>
+
+  </div>
+  <!-- Overlay with products -->
+  <div id="overlayWithProducts" class="
+    fixed inset-0 z-50
+    flex items-start justify-center
+    overlay-backdrop
+    transition-all duration-500 ease-in-out
+    invisible opacity-0
+">
+    <div class="
+      overlay-content-wrapper
+      transform -translate-y-full
+      transition-transform duration-500 ease-in-out
+      w-11/12 max-w-2xl
+  ">
+      <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-280px)] w-full flex flex-col">
+        <h3 class="font-semibold text-xl mb-6"><span id="supplierNameWithProducts"></span> Product’s</h3>
+        <div id="productsList" class="space-y-4 flex-grow overflow-y-auto"></div>
+        <button id="closeWithProducts" class="mt-6 w-full py-3 rounded-full bg-gray-300 hover:bg-gray-400 font-semibold transition-colors">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay no products -->
+  <div id="overlayNoProducts" class="
+    fixed inset-0 z-50
+    flex items-start justify-center
+    overlay-backdrop
+    transition-all duration-500 ease-in-out
+    invisible opacity-0
+    text-center p-6
+">
+    <div class="
+      overlay-content-wrapper
+      transform -translate-y-full
+      transition-transform duration-500 ease-in-out
+      w-11/12 max-w-2xl
+  ">
+      <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-280px)] w-full flex flex-col justify-center">
+        <h3 class="font-semibold text-xl mb-4"><span id="supplierNameNoProducts"></span> Product’s</h3>
+        <p class="mb-6">No product here <button id="addProductLink" class="font-bold underline">Add Product</button></p>
+        <button id="closeNoProducts" class="w-full py-3 rounded-full bg-gray-300 hover:bg-gray-400 font-semibold transition-colors">Close</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script th:src="@{/js/ajaxhelper.js}"></script>
+  <script th:src="@{/js/supplier/list-supplier.js}"></script>
+
+</section>

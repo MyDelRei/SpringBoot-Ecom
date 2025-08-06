@@ -1,0 +1,306 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+    <div class="flex items-center justify-between space-y-6">
+        <h1 class="text-[33px] font-bold text-gray-800 mb-6">Purchase form</h1>
+        <div th:if="${successMessage}" role="alert" class="mb-4 relative flex w-[400px] p-3 text-sm text-white bg-blue-600 rounded-md">
+            <span th:text="${successMessage}">Item added successfully!</span>
+            <button class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5" type="button" onclick="this.parentElement.remove()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main content div with 30px rounded corners for the form -->
+    <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
+
+        <!-- Supplier Dropdown -->
+        <div class="mb-6">
+            <label for="supplier-select" class="block text-sm font-medium text-gray-700 mb-2">Supplier</label>
+            <select id="supplier-select" class="block w-full py-2 px-4 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm appearance-none">
+                <option>supplier</option>
+            </select>
+        </div>
+
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-[22px] font-semibold text-gray-800">Item purchase</h3>
+            <button id="addItemButton" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-full shadow-md flex items-center justify-start transition duration-200">
+                <i class="fas fa-plus mr-2"></i> Add item
+            </button>
+        </div>
+
+        <!-- Item Purchase Table -->
+        <div class="overflow-x-auto rounded-[20px] border border-gray-200 mb-6">
+            <table class="min-w-full bg-white" id="itemPurchaseTable">
+                <thead>
+                <tr class="bg-gray-50 text-gray-700 text-left text-sm font-medium">
+                    <th class="py-3 px-4 border-b border-r border-gray-200">
+                        <div class="inline-flex items-center">
+                            <label class="flex items-center cursor-pointer relative">
+                                <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="checkAllItems" />
+                                <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                    </svg>
+                  </span>
+                            </label>
+                        </div>
+                    </th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">Product</th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">Attribute</th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">Lead day</th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">QTY</th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">Cost price</th>
+                    <th class="py-3 px-4 text-center border-b border-gray-200">Action</th>
+                </tr>
+                </thead>
+                <tbody id="itemPurchaseTableBody">
+                <!-- Initial sample item, will be replaced by dynamically added items -->
+<!--                <tr class="border-b border-gray-200 hover:bg-gray-50">-->
+<!--                    <td class="py-3 px-4 border-r border-gray-200">-->
+<!--                        <div class="inline-flex items-center">-->
+<!--                            <label class="flex items-center cursor-pointer relative">-->
+<!--                                <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="check-item-1" />-->
+<!--                                <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">-->
+<!--                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">-->
+<!--                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>-->
+<!--                    </svg>-->
+<!--                  </span>-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                    </td>-->
+<!--                    <td class="py-3 px-4 border-r border-gray-200">Iphone 15 pro</td>-->
+<!--                    <td class="py-3 px-4 border-r border-gray-200">-->
+<!--                        <button class="show-attribute-btn h-[32px] px-3 py-1 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition-colors"-->
+<!--                                data-attributes='[{"name": "Color", "value": "Blue"}, {"name": "Storage", "value": "256GB"}]'>Show</button>-->
+<!--                    </td>-->
+<!--                    <td class="py-3 px-4 border-r border-gray-200">8 days</td>-->
+<!--                    <td class="py-3 px-4 border-r border-gray-200 qty-display">1</td>-->
+<!--                    <td class="py-3 px-4 border-r border-gray-200 cost-price">899.99 $</td>-->
+<!--                    <td class="py-3 px-4 text-center space-x-2">-->
+<!--                        <button class="text-blue-500 hover:text-blue-700 p-2 rounded-full hover:bg-blue-100 transition duration-200">-->
+<!--                            <i class="fas fa-pencil-alt"></i>-->
+<!--                        </button>-->
+<!--                        <button class="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition duration-200">-->
+<!--                            <i class="fas fa-trash-alt"></i>-->
+<!--                        </button>-->
+<!--                    </td>-->
+<!--                </tr>-->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="flex flex-col md:flex-row justify-between items-end md:items-center text-gray-800 font-semibold mb-6">
+            <div>
+                <p class="mb-2">Item purchase : <span id="item-purchase-count">1</span></p>
+                <p>Expected delivery : <span id="expected-delivery-date">18 mar 2025</span></p>
+            </div>
+            <p class="text-2xl font-bold mt-4 md:mt-0">Grand Total : <span id="grand-total">899.99 $</span></p>
+        </div>
+
+        <!-- Continue Button -->
+        <button id="continuePurchase" class="w-full py-3 rounded-full bg-gray-800 hover:bg-gray-900 text-white font-semibold transition-colors">
+            Continue
+        </button>
+
+    </div>
+
+    <!-- Product List Overlay (for 'Show' in main table - kept for consistency, though not directly used on this page) -->
+    <div id="productOverlay" class="overlay
+    fixed inset-0 z-50
+    flex items-center justify-center
+    backdrop-filter backdrop-blur-sm bg-black bg-opacity-20
+    transition-opacity duration-300 ease-in-out
+    invisible opacity-0
+">
+        <div class="
+      bg-white p-6 rounded-[30px] shadow-lg
+      transform scale-95
+      transition-transform duration-300 ease-in-out
+      w-11/12 max-w-2xl
+    ">
+            <h3 class="font-semibold text-xl mb-6 text-gray-800">Supplier product overlay</h3>
+            <h4 class="font-semibold text-lg mb-4 text-gray-700">Product list</h4>
+            <div id="product-list-container" class="space-y-4 max-h-96 overflow-y-auto">
+                <!-- Product items will be dynamically inserted here -->
+            </div>
+            <button id="closeProductOverlay" class="mt-6 w-full py-3 rounded-full bg-gray-300 hover:bg-gray-400 font-semibold transition-colors text-gray-800">Close</button>
+        </div>
+    </div>
+
+    <!-- Attribute Overlay -->
+    <div id="attributeOverlay" class="
+    fixed inset-0 z-50 overlay
+    flex items-center justify-center
+    backdrop-filter backdrop-blur-sm bg-black bg-opacity-20
+    transition-opacity duration-300 ease-in-out
+    invisible opacity-0
+">
+        <div class="
+      bg-white p-6 rounded-[30px] shadow-lg
+      transform scale-95
+      transition-transform duration-300 ease-in-out
+      w-11/12 max-w-2xl
+    ">
+            <h3 class="font-semibold text-xl mb-6 text-gray-800">Product Attributes</h3>
+            <div id="attribute-list-container" class="space-y-4 max-h-96 overflow-y-auto">
+                <!-- Attribute items will be dynamically inserted here -->
+            </div>
+            <button id="closeAttributeOverlay" class="mt-6 w-full py-3 rounded-full bg-gray-300 hover:bg-gray-400 font-semibold transition-colors text-gray-800">Close</button>
+        </div>
+    </div>
+
+    <!-- Add Item Overlay -->
+    <div id="addItemOverlay" class="
+    fixed inset-0 z-50 overlay
+    flex items-center justify-center
+    backdrop-filter backdrop-blur-sm bg-black bg-opacity-20
+    transition-opacity duration-300 ease-in-out
+    invisible opacity-0
+">
+        <div class="
+      bg-white p-6 rounded-[30px] shadow-lg
+      transform scale-95
+      transition-transform duration-300 ease-in-out
+      w-11/12 max-w-4xl h-[90vh] flex flex-col
+    ">
+            <h3 class="font-semibold text-xl mb-6 text-gray-800">Supplier product list</h3>
+
+            <!-- Search Bar for Add Item Overlay -->
+            <div class="relative w-full mb-6">
+        <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+          <i class="fas fa-search text-gray-600"></i>
+        </span>
+                <input type="text" id="addItemSearch" placeholder="Search" class="w-full pl-10 pr-4 py-2 rounded-full shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white text-sm">
+            </div>
+
+            <!-- Product List Table for Add Item Overlay -->
+            <div class="overflow-x-auto rounded-[20px] border border-gray-200 flex-grow mb-6">
+                <table class="min-w-full bg-white" id="addItemProductTable">
+                    <thead>
+                    <tr class="bg-gray-50 text-gray-700 text-left text-sm font-medium">
+                        <th class="py-3 px-4 border-b border-r border-gray-200">
+                            <div class="inline-flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="checkAllAddItems" />
+                                    <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                      </svg>
+                    </span>
+                                </label>
+                            </div>
+                        </th>
+                        <th class="py-3 px-4 border-b border-r border-gray-200">Product name</th>
+                        <th class="py-3 px-4 border-b border-r border-gray-200">SKU CODE</th>
+                        <th class="py-3 px-4 border-b border-r border-gray-200">Status</th>
+                        <th class="py-3 px-4 border-b border-r border-gray-200">Lead day</th>
+                        <th class="py-3 px-4 border-b border-r border-gray-200">Cost price</th>
+                        <th class="py-3 px-4 text-center border-b border-gray-200">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody id="addItemProductTableBody">
+                    <!-- Sample data for add item overlay -->
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="py-3 px-4 border-r border-gray-200">
+                            <div class="inline-flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="check-add-item-1" />
+                                    <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                      </svg>
+                    </span>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="py-3 px-4 border-r border-gray-200 product-name">Iphone 15 pro</td>
+                        <td class="py-3 px-4 border-r border-gray-200 sku-code">IPH-28-wd</td>
+                        <td class="py-3 px-4 border-r border-gray-200 status">Unavailable</td>
+                        <td class="py-3 px-4 border-r border-gray-200 lead-day">8 days</td>
+                        <td class="py-3 px-4 border-r border-gray-200 cost-price">899.99</td>
+                        <td class="py-3 px-4 text-center">
+                            <button class="add-item-to-qty-overlay-btn h-[32px] px-3 py-1 bg-indigo-600 text-white rounded-full text-sm hover:bg-indigo-700 transition-colors">
+                                <i class="fas fa-plus mr-1"></i> Add
+                            </button>
+                        </td>
+                    </tr>
+                    <tr class="border-b border-gray-200 hover:bg-gray-50">
+                        <td class="py-3 px-4 border-r border-gray-200">
+                            <div class="inline-flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="check-add-item-2" />
+                                    <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                      </svg>
+                    </span>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="py-3 px-4 border-r border-gray-200 product-name">MacBook Air M2</td>
+                        <td class="py-3 px-4 border-r border-gray-200 sku-code">MAC-M2-256</td>
+                        <td class="py-3 px-4 border-r border-gray-200 status">Available</td>
+                        <td class="py-3 px-4 border-r border-gray-200 lead-day">5 days</td>
+                        <td class="py-3 px-4 border-r border-gray-200 cost-price">1299.00</td>
+                        <td class="py-3 px-4 text-center">
+                            <button class="add-item-to-qty-overlay-btn h-[32px] px-3 py-1 bg-indigo-600 text-white rounded-full text-sm hover:bg-indigo-700 transition-colors">
+                                <i class="fas fa-plus mr-1"></i> Add
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination for Add Item Overlay -->
+            <div class="flex items-center justify-end mt-auto space-x-1 text-gray-600">
+                <a href="#" class="px-3 py-1 rounded-full hover:bg-gray-200"><i class="fas fa-chevron-left"></i></a>
+                <a href="#" class="px-3 py-1 rounded-full bg-gray-900 text-white font-bold">1</a>
+                <a href="#" class="px-3 py-1 rounded-full hover:bg-gray-200">2</a>
+                <a href="#" class="px-3 py-1 rounded-full hover:bg-gray-200">3</a>
+                <span class="px-3 py-1">....</span>
+                <a href="#" class="px-3 py-1 rounded-full hover:bg-gray-200">5</a>
+                <a href="#" class="px-3 py-1 rounded-full hover:bg-gray-200"><i class="fas fa-chevron-right"></i></a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Add Quantity Overlay -->
+    <div id="addQuantityOverlay" class="
+    fixed inset-0 z-50 overlay
+    flex items-center justify-center
+    backdrop-filter backdrop-blur-sm bg-black bg-opacity-20
+    transition-opacity duration-300 ease-in-out
+    invisible opacity-0
+">
+        <div class="
+      bg-white p-6 rounded-[30px] shadow-lg
+      transform scale-95
+      transition-transform duration-300 ease-in-out
+      w-11/12 max-w-sm
+    ">
+            <h3 class="font-semibold text-xl mb-6 text-gray-800">Supplier product overlay</h3>
+            <h4 class="font-semibold text-lg mb-4 text-gray-700">Edit</h4>
+
+            <div class="mb-6">
+                <label for="quantity-input" class="block text-sm font-medium text-gray-700 mb-2">QTY</label>
+                <input type="number" id="quantity-input" value="1" min="1" class="block w-full py-2 px-4 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm">
+            </div>
+
+            <button id="confirmAddItemQtyButton" class="w-full py-3 rounded-full bg-black hover:bg-gray-800 text-white font-semibold transition-colors">
+                <i class="fas fa-plus mr-2"></i> Add
+            </button>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:src="@{/js/ajaxhelper.js}"></script>
+    <!-- You might want a dedicated JS file for this new page -->
+    <script th:src="@{/js/purchase-form/purchase-form.js}"></script>
+
+</section>

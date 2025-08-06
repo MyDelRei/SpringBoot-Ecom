@@ -1,0 +1,155 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+  <div class="flex items-center justify-between space-y-6">
+    <h1 class="text-[33px] font-bold text-gray-800 mb-6">Product page</h1>
+    <div th:if="${successMessage}" role="alert" class="mb-4 relative flex w-[400px] p-3 text-sm text-white bg-blue-600 rounded-md">
+      <span th:text="${successMessage}">Brand created successfully!</span>
+      <button class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5" type="button" onclick="this.parentElement.remove()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main content div with 30px rounded corners -->
+  <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
+    <!-- Top Section: My brand, Add brand, Search, Filter -->
+    <div class="flex flex-col justify-between mb-6 space-y-4 md:space-y-0">
+      <div class="flex justify-between mb-6 space-y-4 md:space-y-0">
+        <h2 class="text-[27px] font-semibold text-gray-800">Supplier payment method</h2>
+        <!-- Add method Button -->
+        <a th:href="@{/supplier/add-payment-method}" class="bg-indigo-600 hover:bg-indigo-700 w-[210px] text-white font-semibold py-2 px-4 rounded-full shadow-md flex items-center justify-start transition duration-200">
+          <i class="fas fa-plus mr-2"></i> Add method
+        </a>
+      </div>
+
+      <div class="flex justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full md:w-auto">
+        <!-- Dropdown Filter -->
+        <div class="relative w-full sm:w-auto">
+          <select id="paymentMethodFilter" class="block w-[200px] py-2 px-4 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm appearance-none">
+            <option>Title</option>
+            <option>Type</option>
+            <option>Supplier</option>
+            <option>Bank No</option>
+          </select>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="relative flex-grow sm:flex-grow-0 w-full sm:w-64">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                                    <i class="fas fa-search text-gray-600"></i>
+                                </span>
+          <input type="text" id="searchInput" placeholder="Search" class="w-full pl-10 pr-4 py-2 rounded-full shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white text-sm">
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- payment List Table -->
+    <div class="overflow-x-auto rounded-[20px] border border-gray-200"> <!-- Outer border and rounded corners for the table container -->
+      <table class="min-w-full bg-white">
+        <thead>
+        <tr class="bg-gray-50 text-gray-700 text-left text-sm font-medium">
+          <th class="py-3 px-4 border-b border-r border-gray-200"> <!-- Border-b for bottom, border-r for right -->
+            <div class="inline-flex items-center">
+              <label class="flex items-center cursor-pointer relative">
+                <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="check7" />
+                <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                              </svg>
+                                              </span>
+              </label>
+            </div>
+          </th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Supplier</th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Bank</th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Type</th>
+          <th class="py-3 px-4 border-b border-r border-gray-200">Bank Account No</th>
+          <th class="py-3 px-4 text-center border-b border-gray-200">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Mock Data Rows -->
+
+        <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div  id="pagination" class="flex items-center justify-end mt-6 space-x-1 text-gray-600">
+
+    </div>
+  </div>
+
+  <div id="updateProductOverlay" class="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/30 backdrop-blur-sm transition-opacity duration-300 hidden">
+    <div id="overlayContent" class="mt-10 bg-white max-w-4xl w-full p-8 rounded-3xl-custom shadow-lg transform -translate-y-10 opacity-0 transition-all duration-500">
+      <h2 class="text-2xl font-semibold text-gray-800 mb-6">Update product</h2>
+
+      <form action="#" method="post">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
+          <div class="relative">
+            <label for="Supplier" class="block text-gray-700 text-sm font-medium mb-2">Supplier</label>
+            <input type="text" id="Supplier" name="supplier" placeholder="Enter Supplier" class="shadow-sm border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" />
+            <ul id="supplierDropdown" class="absolute left-0 right-0 mt-1 bg-white border border-gray-200 rounded-md shadow-md z-50 hidden max-h-60 overflow-y-auto"></ul>
+          </div>
+
+          <div>
+            <input type="hidden" id="SPMID" name="SPMID" />
+            <input type="hidden" id="SupplierId" name="SupplierId" />
+          </div>
+
+          <div>
+            <label for="Type" class="block text-gray-700 text-sm font-medium mb-2">Type</label>
+            <select id="Type" name="Type" class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-full shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200">
+              <option>Bank Transfer</option>
+              <option>Physical</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="Bank" class="block text-gray-700 text-sm font-medium mb-2">Bank</label>
+            <input type="text" id="Bank" name="Bank" placeholder="Bank name" class="shadow-sm border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" />
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label for="accountNo" class="block text-gray-700 text-sm font-medium mb-2">Account number</label>
+          <input type="text" id="accountNo" name="accountNo" placeholder="Bank account number" class="shadow-sm border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" />
+        </div>
+
+        <div class="mb-6">
+          <input type="file" id="QRImg" accept="image/*" class="hidden" />
+          <button type="button" id="chooseImageBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-full shadow-md transition duration-200">
+            Choose base image
+          </button>
+        </div>
+
+        <div id="imagePreview" class="mb-8 border border-gray-300 border-dashed rounded-[15px] min-h-[200px] flex items-center justify-center bg-gray-50">
+          <div class="text-center text-gray-400">
+            <svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <p class="mt-1 text-sm">Upload image</p>
+          </div>
+        </div>
+
+        <div class="flex justify-end space-x-4">
+          <button type="submit" id="createPaymentMethodForSuppBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Save</button>
+          <button type="button" id="cancelBtn" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script th:src="@{/js/ajaxhelper.js}"></script>
+  <script th:src="@{/js/supplier/payment-method-list.js}"></script>
+
+</section>

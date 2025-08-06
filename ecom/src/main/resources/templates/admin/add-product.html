@@ -1,0 +1,81 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto" xmlns:th="http://www.thymeleaf.org">
+    <h1 class="text-2xl font-semibold text-gray-800 mb-6">Add Product</h1>
+
+    <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
+        <h2 class="text-xl font-semibold text-gray-800 mb-6">Fill Product Infomation</h2>
+
+        <form action="#" method="post">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-4">
+                <div>
+                    <label for="productName" class="block text-gray-700 text-sm font-medium mb-2">Product name</label>
+                    <input type="text" id="productName" name="productName"
+                           class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200"
+                           placeholder="Product name">
+                </div>
+
+
+                <div>
+                    <label for="brandName" class="block text-gray-700 text-sm font-medium mb-2">Brand name</label>
+                    <div class="relative">
+                        <select id="brandName" name="brandName"
+                                class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-full shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200">
+                            <option>Brand</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="categoryName" class="block text-gray-700 text-sm font-medium mb-2">Category name</label>
+                    <div class="relative">
+                        <select id="categoryName" name="categoryName"
+                                class="block appearance-none w-full bg-white border border-gray-300 text-gray-700 py-3 px-4 pr-8 rounded-full shadow-sm leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200">
+                            <option>Category</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label for="description" class="block text-gray-700 text-sm font-medium mb-2">Description</label>
+                <textarea id="description" name="description" rows="5"
+                          class="shadow-sm appearance-none border border-gray-300 rounded-[15px] w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200 resize-y"
+                          placeholder="Enter description"></textarea>
+            </div>
+
+            <!-- Replace Choose base image button -->
+            <div class="mb-6">
+                <input type="file" id="baseImageInput" accept="image/*" class="hidden">
+                <button type="button"
+                        onclick="document.getElementById('baseImageInput').click();"
+                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-full shadow-md transition duration-200">
+                    Choose base image
+                </button>
+            </div>
+
+
+            <div id="imagePreview" class="mb-8 border border-gray-300 border-dashed rounded-[15px] min-h-[200px] flex items-center justify-center bg-gray-50">
+                <div class="text-center text-gray-400">
+                    <svg class="mx-auto h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                    </svg>
+                    <p class="mt-1 text-sm">Upload image</p>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-4">
+                <button type="submit" id="createProductBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Save</button>
+                <button type="button" class="bg-gray-700 hover:bg-gray-800 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <th:script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script th:src="@{/js/ajaxhelper.js}"></script>
+        <script th:src="@{/js/product/add-product.js}"></script>
+    </th:script>
+
+
+</section>
