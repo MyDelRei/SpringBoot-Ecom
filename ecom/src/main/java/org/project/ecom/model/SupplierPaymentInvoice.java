@@ -20,7 +20,7 @@ public class SupplierPaymentInvoice {
     @Column(name = "PAYMENT_INVOICE_ID", nullable = false)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER) // Change from LAZY to EAGER
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "PAYMENT_ID")
     private SupplierPayment payment;

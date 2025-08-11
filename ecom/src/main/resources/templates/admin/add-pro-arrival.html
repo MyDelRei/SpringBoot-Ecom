@@ -1,0 +1,159 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto" xmlns:th="http://www.thymeleaf.org">
+
+    <div class="bg-white px-8 py-9 sm:p-10 rounded-3xl shadow-lg w-full">
+        <h1 class="text-3xl font-bold mb-8 text-gray-900">
+            Add Product Arrival
+        </h1>
+
+        <!-- Product Arrival Form -->
+        <form id="product-arrival-form" class="space-y-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                <!-- Arrival Date -->
+                <div>
+                    <label
+                            for="arrival_date"
+                            class="block text-sm font-medium text-gray-700 mb-1">
+                        Arrival Date
+                        <span class="text-red-500">*</span>
+                    </label>
+                    <input type="date"
+                           id="arrival_date"
+                           name="arrival_date"
+                           required
+                           class="mt-1 block w-full px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"/>
+                </div>
+
+                <!-- Received By (User ID) -->
+                <div>
+                    <label for="received_by"
+                           class="block text-sm font-medium text-gray-700 mb-1">
+                        Received By (User)
+                        <span class="text-red-500">*</span></label>
+                    <select id="received_by"
+                            name="received_by"
+                            required
+                            class="appearance-none mt-1 block w-full px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                        <option value="" disabled selected>Select a user</option>
+                        <!-- Add more users as needed -->
+                    </select>
+                </div>
+
+                <!--  Purchase Request ID -->
+                <div>
+                    <label for="request_id"
+                           class="block text-sm font-medium text-gray-700 mb-1">
+                        Purchase Request Id
+                    </label>
+                    <input type="text"
+                           id="request_id"
+                           name="request_id"
+                           class="mt-1 block w-full px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                           placeholder="1"/>
+                </div>
+                <!-- Invoice number -->
+                <div class="relative">
+                    <label for="invoice_number"
+                           class="block text-sm font-medium text-gray-700 mb-1">
+                        Invoice Number
+                        <span class="text-red-500">*</span>
+                    </label>
+                    <select id="invoice_number"
+                            name="invoice_number"
+                            required
+                            class="appearance-none mt-1 block w-full px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                        <option value="" disabled selected>Select Invoice</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Product Item Arrivals Section -->
+            <div>
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 border-t border-gray-300 pt-6">
+                    Received Items
+                </h2>
+                <div class="max-h-[400px] overflow-auto">
+                <div id="item-entries" class="space-y-4">
+                    <!-- Item Entry Template (will be cloned by JS) -->
+                    <div class="item-entry border border-gray-300 p-4 rounded-xl bg-gray-50/80">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-4 items-center">
+                            <!-- SKU ID -->
+                            <div>
+                                <label for="sku_id_1" class="block text-sm font-medium text-gray-700 mb-1">
+                                    SKU <span class="text-red-500">*</span>
+                                </label>
+                                <select id="sku_id_1"
+                                        name="sku_id_1"
+                                        required
+                                        class="sku-select appearance-none mt-1 block w-full px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="" disabled selected>Select a SKU</option>
+                                </select>
+                            </div>
+                            <!-- Quantity Received -->
+                            <div>
+                                <label for="quantity_received_1"
+                                       class="block text-sm font-medium text-gray-700 mb-1">
+                                    Quantity Received
+                                    <span class="text-red-500">*</span>
+                                </label>
+                                <input
+                                        type="number"
+                                        id="quantity_received_1"
+                                        name="quantity_received_1"
+                                        min="1"
+                                        required
+                                        class="quantity-received appearance-none mt-1 block w-full px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                                        placeholder="e.g., 20"/>
+                            </div>
+                            <!-- Note -->
+                            <div>
+                                <label for="note_1"
+                                       class="block text-sm font-medium text-gray-700 mb-1">
+                                    Note
+                                </label>
+                                <input
+                                        type="text"
+                                        id="note_1"
+                                        name="note_1"
+                                        class="note-input mt-1 block w-full px-4 py-2 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                                        placeholder="e.g., All units in good condition"/>
+                            </div>
+                        </div>
+                        <div class="text-right mt-2">
+                            <button
+                                    type="button"
+                                    class="remove-item text-red-600 hover:text-red-800 text-sm font-medium"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <button type="button"
+                        id="add-item"
+                        class="mt-4 text-indigo-600 hover:text-indigo-800 font-semibold text-sm">
+                    + Add Another Item
+                </button>
+
+            </div>
+            <!-- Submit and Cancel Buttons -->
+            <div class="flex justify-end space-x-4 pt-6 border-t border-gray-300">
+                <button type="button"
+                        class="px-6 py-2 bg-gray-200 text-gray-800 rounded-full hover:bg-gray-300 font-semibold transition-colors">
+                    <a href="/product-arrival">Cancel</a>
+                </button>
+                <button type="submit"
+                        class="px-6 py-2 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 font-semibold transition-colors shadow-md hover:shadow-lg">
+                    Save Arrival
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:src="@{/js/ajaxhelper.js}"></script>
+    <script th:src="@{/js/product-arrival/add-product-arrival.js}"></script>
+</section>

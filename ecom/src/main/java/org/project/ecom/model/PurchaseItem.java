@@ -31,6 +31,4 @@ public class PurchaseItem {
 
     @Column(name = "QUANTITY_REQUEST")
     private Long quantityRequest;
-
-
 }

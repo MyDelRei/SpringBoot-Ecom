@@ -87,6 +87,7 @@ CREATE TABLE Supplier_Payment_Invoice (
                                           CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                           UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                                           CONSTRAINT fk_supplier_invoice_payment FOREIGN KEY (payment_id) REFERENCES Supplier_Payment(payment_id) ON DELETE CASCADE
+
     -- invoice_id FK removed: invoice_id column is not declared
 );
 

@@ -16,6 +16,7 @@ public class SupplierPaymentMethodController {
 
     private final SupplierPaymentMethodService service;
 
+
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody SupplierPaymentMethodRequestDTO dto) {
         service.create(dto);

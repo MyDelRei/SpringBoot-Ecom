@@ -1,0 +1,170 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+    <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4 sm:mb-0">
+                Product Arrivals
+            </h1>
+            <a th:href="@{/product-arrival/add}"
+               class="px-5 py-2.5 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 font-semibold transition-colors shadow-md hover:shadow-lg flex items-center space-x-2">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="h-5 w-5"
+                     viewBox="0 0 20 20"
+                     fill="currentColor">
+                    <path fill-rule="evenodd"
+                          d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                          clip-rule="evenodd"/>
+                </svg>
+                <span>Add New Arrival</span>
+            </a>
+        </div>
+
+        <!-- Filters -->
+        <div
+                class="flex justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full md:w-auto"
+        >
+            <!-- Dropdown Filter -->
+            <div class="flex space-x-4 w-full sm:w-auto">
+                <div class="relative w-full sm:w-auto">
+                    <select
+                            id=""
+                            class="block w-[200px] py-2 px-4 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm appearance-none"
+                    >
+                        <option>Product</option>
+                    </select>
+                </div>
+                <div class="relative w-full sm:w-auto">
+                    <select
+                            id=""
+                            class="block w-[200px] py-2 px-4 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm appearance-none"
+                    >
+                        <option>Supplier</option>
+                    </select>
+                </div>
+                <div class="relative w-full sm:w-auto">
+                    <select
+                            id=""
+                            class="block w-[200px] py-2 px-4 border border-gray-300 bg-white rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm appearance-none"
+                    >
+                        <option>Date</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="relative flex-grow sm:flex-grow-0 w-full sm:w-64">
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                  <i class="fas fa-search text-gray-600"></i>
+                </span>
+                <input
+                        type="text"
+                        id="search"
+                        placeholder="Search"
+                        class="w-full pl-10 pr-4 py-2 rounded-full shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white text-sm"
+                />
+            </div>
+        </div>
+
+        <!-- Arrivals Table -->
+        <div class="bg-white rounded-2xl mt-6 shadow-sm overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="min-w-full bg-white">
+                    <thead>
+                    <tr class="bg-gray-50 text-gray-700 text-left text-sm font-medium">
+                        <th class="py-3 px-4 border-b border-r border-gray-200">
+                            <!-- Border-b for bottom, border-r for right -->
+                            <div class="inline-flex items-center">
+                                <label class="flex items-center cursor-pointer relative">
+                                    <input type="checkbox"
+                                           class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600"
+                                           id="check7"/>
+                                    <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                              <svg xmlns="http://www.w3.org/2000/svg"
+                                   class="h-3.5 w-3.5"
+                                   viewBox="0 0 20 20"
+                                   fill="currentColor"
+                                   stroke="currentColor"
+                                   stroke-width="1">
+                                <path fill-rule="evenodd"
+                                      d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                      clip-rule="evenodd">
+                                </path>
+                              </svg>
+                            </span>
+                                </label>
+                            </div>
+                        </th>
+                        <th class="py-3 px-4 border-b border-r border-gray-200">
+                            Arrival Id
+                        </th>
+                        <th class="py-3 px-4 border-b border-r border-gray-200">
+                            Product
+                        </th>
+                        <th class="py-3 px-4 border-b border-r border-gray-200">
+                            Invoice Number
+                        </th>
+                        <th class="py-3 px-4 border-b border-r border-gray-200">
+                            Payment Status
+                        </th>
+                        <th class="py-3 px-4 border-b border-r border-gray-200">
+                            Quantity Received
+                        </th>
+                        <th class="py-3 px-4 border-b border-r border-gray-200">
+                            Arrival Date
+                        </th>
+                        <th
+                                class="py-3 px-4 text-center border-b border-gray-200"
+                        >
+                            Action
+                        </th>
+                        <!-- Last header, no right border -->
+                    </tr>
+                    </thead>
+                    <tbody id="arrival-table-body">
+                    <!-- Data will be here-->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="flex items-center justify-end mt-6 space-x-1 text-gray-600"></div>
+    </div>
+
+    <!--    Show modal product -->
+    <!-- Product Modal -->
+
+    <div id="product-modal" class="modal-container fixed inset-0 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50 hidden p-4">
+        <div class="bg-white rounded-3xl border-1 border-indigo-500 shadow-xl w-full max-w-5xl transform transition-all scale-95 opacity-0 p-5" id="modal-content">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between py-3 px-5 mb-2">
+                <h2 id="product-modal-title" class="text-2xl font-bold text-gray-800">Product Details</h2>
+                <button id="close-product-modal" class="text-gray-400 hover:text-gray-600 transition-colors cursor-pointer" title="close modal">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="overflow-y-auto max-h-[60vh] border border-gray-200 rounded-3xl">
+                <table class="min-w-full table-auto px-6">
+                    <thead class="bg-gray-50 sticky top-0">
+                    <tr>
+                        <th class="px-6 py-3 border-r border-gray-200 text-left text-sm font-medium text-gray-800 uppercase text-semibold tracking-wider">Product Name</th>
+                        <th class="px-6 py-3 border-r border-gray-200 text-left text-sm font-medium text-gray-800 uppercase text-semibold tracking-wider">SKU Code</th>
+                        <th class="px-6 py-3 border-r border-gray-200 text-center text-sm font-medium text-gray-800 uppercase text-semibold tracking-wider">Quantity</th>
+                        <th class="px-6 py-3 border-l border-gray-200 text-left text-sm font-medium text-gray-800 uppercase text-semibold tracking-wider">Note</th>
+                    </tr>
+                    </thead>
+                    <tbody id="modal-product-body" class="bg-white divide-y divide-gray-200">
+                    <!-- Dynamic rows will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:src="@{/js/ajaxhelper.js}"></script>
+    <script th:src="@{/js/product-arrival/product-arrival.js}"></script>
+</section>
