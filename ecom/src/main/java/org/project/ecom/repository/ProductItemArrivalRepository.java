@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProductItemArrivalRepository extends JpaRepository<ProductItemArrival, Long> {
@@ -12,4 +13,6 @@ public interface ProductItemArrivalRepository extends JpaRepository<ProductItemA
             "WHERE p.arrival.id = :arrivalId AND p.sku.skuId = :skuId")
     Optional<Integer> findQuantityReceivedByArrivalIdAndSkuId(@Param("arrivalId") Long arrivalId,
                                                               @Param("skuId") Long skuId);
+
+    List<ProductItemArrival> findByArrivalId(Long arrivalId);
 }

@@ -29,29 +29,32 @@ public class ProductArrivalService {
     public ProductArrivalDTO createProductArrival(ProductArrivalRequestDTO dto) {
         System.out.println("[DEBUG] Received DTO: " + dto);
 
+        // Fetch PurchaseRequest
         PurchaseRequest request = purchaseRepository.findById(dto.getRequestId())
                 .orElseThrow(() -> {
                     System.err.println("[ERROR] PurchaseRequest not found with id: " + dto.getRequestId());
                     return new EntityNotFoundException("PurchaseRequest not found with id: " + dto.getRequestId());
                 });
 
+        // Fetch User
         User receivedBy = userRepository.findById(dto.getReceivedById())
                 .orElseThrow(() -> {
                     System.err.println("[ERROR] User not found with id: " + dto.getReceivedById());
                     return new EntityNotFoundException("User not found with id: " + dto.getReceivedById());
                 });
 
-        // Validate the status of the PurchaseRequest
-        if (!List.of("approved", "pending").contains(request.getStatus().toLowerCase())) {
-            throw new IllegalStateException("Purchase request must be in 'approved' or 'pending' status. Current status: " + request.getStatus());
+        // Validate status
+        if (!List.of("approved", "paid").contains(request.getStatus().toLowerCase())) {
+            throw new IllegalStateException("Purchase request must be in 'approved' or 'paid' status. Current status: " + request.getStatus());
         }
-        // Fetch and validate purchase items tied to the PurchaseRequest
+
+        // Fetch purchase items
         List<PurchaseItemProjection> purchaseItems = purchaseItemRepository.findPurchaseItemsWithAttributes(dto.getRequestId());
         if (purchaseItems.isEmpty()) {
             throw new IllegalStateException("No purchase items found for Request ID: " + dto.getRequestId());
         }
 
-        // Create the ProductArrival entity
+        // Create ProductArrival entity
         ProductArrival arrival = ProductArrival.builder()
                 .request(request)
                 .invoiceNumber(dto.getInvoiceNumber())
@@ -60,12 +63,10 @@ public class ProductArrivalService {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
-
-        // Save the ProductArrival to the database
         arrival = productArrivalRepository.save(arrival);
         System.out.println("[INFO] ProductArrival created successfully with ID: " + arrival.getId());
 
-        // Process the ProductItemArrival entities from the DTO
+        // Process each item
         if (dto.getItems() != null && !dto.getItems().isEmpty()) {
             for (ProductItemArrivalRequestDTO itemDto : dto.getItems()) {
                 Sku sku = skuRepository.findById(itemDto.getSkuId())
@@ -74,16 +75,19 @@ public class ProductArrivalService {
                             return new EntityNotFoundException("Sku not found with id: " + itemDto.getSkuId());
                         });
 
-                // Find a matching purchase item for the SKU
+                // Type-safe matching of purchase items
                 PurchaseItemProjection matchingPurchaseItem = purchaseItems.stream()
-                        .filter(pi -> pi.getRequestItemId().equals(sku.getSkuId()))
+                        .peek(pi -> System.out.println("[DEBUG] Purchase item SKU: " + pi.getSkuId() + ", Arrival SKU: " + itemDto.getSkuId()))
+                        .filter(pi -> pi.getSkuId() != null && pi.getSkuId().longValue() == itemDto.getSkuId().longValue())
                         .findFirst()
                         .orElseThrow(() -> new IllegalStateException(
-                                "No purchase item found for SKU ID: " + itemDto.getSkuId()
+                                "No purchase item found for SKU ID: " + itemDto.getSkuId() + " in Request ID: " + dto.getRequestId()
                         ));
 
 
-                // Validate the quantity received doesn't exceed the requested quantity
+
+
+                // Validate quantity
                 if (itemDto.getQuantityReceived() > matchingPurchaseItem.getQuantity()) {
                     throw new IllegalStateException("Quantity received exceeds requested quantity for SKU ID: "
                             + itemDto.getSkuId() + ". Received: "
@@ -91,7 +95,7 @@ public class ProductArrivalService {
                             + matchingPurchaseItem.getQuantity());
                 }
 
-                // Create and save a ProductItemArrival entity
+                // Save ProductItemArrival
                 ProductItemArrival item = ProductItemArrival.builder()
                         .arrival(arrival)
                         .sku(sku)
@@ -106,7 +110,7 @@ public class ProductArrivalService {
             throw new IllegalStateException("Product arrival must include at least one item.");
         }
 
-        // Fetch the saved ProductItemArrival entities for the response DTO
+        // Prepare response DTO
         List<ProductItemArrival> savedItems = productItemArrivalRepository.findByArrivalId(arrival.getId());
         List<ProductItemArrivalDTO> itemDtos = savedItems.stream()
                 .map(item -> new ProductItemArrivalDTO(
@@ -117,7 +121,6 @@ public class ProductArrivalService {
                         item.getNote()))
                 .collect(Collectors.toList());
 
-        // Build and return the response DTO
         return new ProductArrivalDTO(
                 arrival.getId(),
                 arrival.getRequest().getId(),
@@ -128,6 +131,7 @@ public class ProductArrivalService {
                 itemDtos
         );
     }
+
 
     // == == == == == == == == ==
     // GET PRODUCT ARRIVAL BY ID

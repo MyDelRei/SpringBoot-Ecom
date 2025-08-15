@@ -1,18 +1,25 @@
 package org.project.ecom.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import java.net.http.HttpResponse;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
+@Data
+@Builder
 @Getter
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "PRODUCT_ARRIVAL")
 public class ProductArrival {
     @Id
@@ -43,10 +50,15 @@ public class ProductArrival {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "CREATED_AT")
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "UPDATED_AT")
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "arrival")
+    private Set<ProductItemArrival> productItemArrivals = new LinkedHashSet<>();
+
+
 
 }

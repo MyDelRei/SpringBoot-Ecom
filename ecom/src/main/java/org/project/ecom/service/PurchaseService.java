@@ -44,6 +44,11 @@ public class PurchaseService {
         this.supplierPaymentRepository = supplierPaymentRepository;
     }
 
+    public PurchaseRequest getPurchaseRequest(Long id) {
+        return purchaseRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Purchase Request not found with ID: " + id));
+    }
+
     @Transactional
     public PurchaseRequest createPurchaseRequest(PurchaseRequestDTO dto) {
         PurchaseRequest purchaseRequest = new PurchaseRequest();

@@ -3,17 +3,20 @@ package org.project.ecom.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
+@Builder
 @Setter
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "PRODUCT_ITEM_ARRIVAL")
 public class ProductItemArrival {
     @Id
@@ -42,10 +45,10 @@ public class ProductItemArrival {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "CREATED_AT")
-    private Instant createdAt;
+    private LocalDateTime createdAt;
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "UPDATED_AT")
-    private Instant updatedAt;
+    private LocalDateTime updatedAt;
 
 }

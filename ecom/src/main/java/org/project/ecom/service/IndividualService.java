@@ -38,7 +38,7 @@ public class IndividualService {
     LocationRepository locationRepository;
 
     public List<ArrivalSkuProjection> getPaidArrivalSkuList() {
-        return individualUnitRepository.findArrivalSkuByStatus("paid");
+        return individualUnitRepository.findArrivalSkuByStatus("approved");
     }
 
     public List<ArrivalSkuDetailsDTO> getDetailsByArrivalId(Long arrivalId) {

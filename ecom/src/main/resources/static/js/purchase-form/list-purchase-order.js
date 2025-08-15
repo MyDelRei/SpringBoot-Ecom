@@ -234,7 +234,7 @@ $(document).ready(function() {
                 console.log("Stored Request:", requestData);
 
                 // Later, you can do:
-                // window.location.href = `/payment/purchase?requestId=${requestData.requestId}`;
+                window.location.href = `/payment/purchase?requestId=${requestData.requestId}`;
             });
         });
     }

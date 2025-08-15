@@ -10,4 +10,5 @@ public interface PurchaseItemProjection {
     String getProductName();
     String getAttributeName();
     String getAttributeValue();
+    Long getSkuId();
 }
