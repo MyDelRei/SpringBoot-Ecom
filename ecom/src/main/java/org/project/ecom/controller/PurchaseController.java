@@ -5,6 +5,8 @@ import org.project.ecom.model.PurchaseRequest;
 import org.project.ecom.service.PurchaseService;
 
 import jakarta.validation.Valid;
+import org.project.ecom.service.SupplierPaymentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/purchases")
 public class PurchaseController {
+
+    @Autowired
+    SupplierPaymentService supplierPaymentService;
 
     private final PurchaseService purchaseService;
 
@@ -91,6 +96,18 @@ public class PurchaseController {
     public List<PurchaseItemProjection> getPurchaseItemsByRequestId(@PathVariable Long requestId) {
         return purchaseService.getPurchaseItemsWithAttributes(requestId);
     }
+
+    @GetMapping("/payment-list")
+    public ResponseEntity<List<SupplierPurchaseDetailsDTO>> getSupplierPurchaseDetails() {
+        List<SupplierPurchaseDetailsDTO> purchaseDetailsList = supplierPaymentService.getAllSupplierPurchaseDetails();
+
+        if (purchaseDetailsList == null || purchaseDetailsList.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(purchaseDetailsList);
+    }
+
 
 
 

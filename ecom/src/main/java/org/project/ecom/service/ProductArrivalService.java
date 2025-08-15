@@ -35,12 +35,6 @@ public class ProductArrivalService {
                     return new EntityNotFoundException("PurchaseRequest not found with id: " + dto.getRequestId());
                 });
 
-        SupplierPayment payment = supplierPaymentRepository.findById(dto.getPaymentId())
-                .orElseThrow(() -> {
-                    System.err.println("[ERROR] SupplierPayment not found with id: " + dto.getPaymentId());
-                    return new EntityNotFoundException("SupplierPayment not found with id: " + dto.getPaymentId());
-                });
-
         User receivedBy = userRepository.findById(dto.getReceivedById())
                 .orElseThrow(() -> {
                     System.err.println("[ERROR] User not found with id: " + dto.getReceivedById());
@@ -60,7 +54,6 @@ public class ProductArrivalService {
         // Create the ProductArrival entity
         ProductArrival arrival = ProductArrival.builder()
                 .request(request)
-                .payment(payment)
                 .invoiceNumber(dto.getInvoiceNumber())
                 .arrivalDate(dto.getArrivalDate())
                 .receivedBy(receivedBy)
@@ -83,9 +76,12 @@ public class ProductArrivalService {
 
                 // Find a matching purchase item for the SKU
                 PurchaseItemProjection matchingPurchaseItem = purchaseItems.stream()
-                        .filter(pi -> pi.getProductId().equals(sku.getSkuId()))
+                        .filter(pi -> pi.getRequestItemId().equals(sku.getSkuId()))
                         .findFirst()
-                        .orElseThrow(() -> new IllegalStateException("No purchase item found for SKU ID: " + itemDto.getSkuId()));
+                        .orElseThrow(() -> new IllegalStateException(
+                                "No purchase item found for SKU ID: " + itemDto.getSkuId()
+                        ));
+
 
                 // Validate the quantity received doesn't exceed the requested quantity
                 if (itemDto.getQuantityReceived() > matchingPurchaseItem.getQuantity()) {
@@ -126,7 +122,6 @@ public class ProductArrivalService {
                 arrival.getId(),
                 arrival.getRequest().getId(),
                 arrival.getRequest().getStatus(),
-                arrival.getPayment().getId(),
                 arrival.getInvoiceNumber(),
                 arrival.getArrivalDate(),
                 arrival.getReceivedBy().getUser_id(),
@@ -155,7 +150,6 @@ public class ProductArrivalService {
                 arrival.getId(),
                 arrival.getRequest().getId(),
                 arrival.getRequest().getStatus(),
-                arrival.getPayment().getId(),
                 arrival.getInvoiceNumber(),
                 arrival.getArrivalDate(),
                 arrival.getReceivedBy().getUser_id(),
@@ -184,7 +178,6 @@ public class ProductArrivalService {
                     arrival.getId(),
                     arrival.getRequest().getId(),
                     arrival.getRequest().getStatus(),
-                    arrival.getPayment().getId(),
                     arrival.getInvoiceNumber(),
                     arrival.getArrivalDate(),
                     arrival.getReceivedBy().getUser_id(),

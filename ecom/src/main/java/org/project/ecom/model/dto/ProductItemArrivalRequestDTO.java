@@ -12,8 +12,10 @@ import lombok.NoArgsConstructor;
 public class ProductItemArrivalRequestDTO {
     @NotNull
     private Long skuId;
+
     @NotNull
     @Min(1)
     private Long quantityReceived;
+
     private String note;
 }

@@ -16,9 +16,9 @@ public class ProductArrivalDTO {
     private Long id;
     @NotNull
     private Long requestId;
+
     private String requestStatus;
-    @NotNull
-    private Long paymentId;
+
     private Long invoiceNumber;
     @NotNull
     private LocalDate arrivalDate;

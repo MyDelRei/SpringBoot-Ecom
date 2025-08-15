@@ -27,4 +27,33 @@ public interface SupplierPaymentRepositoty extends JpaRepository<SupplierPayment
         """, nativeQuery = true)
     List<Object[]> getSupplierPaymentRawRows(@Param("requestId") Long requestId);
 
+    @Query(value = """
+
+            SELECT
+        pr.request_id,
+        s.supplier_id,
+        s.supplier_name,
+        spi.invoice_number,
+        sp.amount,
+        pr.status AS request_status,
+        spm.payment_type,
+        sp.payment_date,
+        sk.sku_code,
+        p.product_name,
+        pi.quantity_request,
+        sk.base_price
+    FROM Supplier s
+    JOIN Purchase_Request pr ON s.supplier_id = pr.supplier_id
+    JOIN Supplier_Payment sp ON pr.request_id = sp.request_id
+    JOIN Supplier_Payment_Invoice spi ON sp.payment_id = spi.payment_id
+    JOIN Supplier_Payment_Method spm ON sp.spm_id = spm.spm_id
+    JOIN Purchase_Item pi ON pr.request_id = pi.request_id
+    JOIN Sku sk ON pi.sku_id = sk.sku_id
+    JOIN Product p ON sk.product_id = p.product_id
+    ORDER BY pr.request_id, sk.sku_code
+    
+    """, nativeQuery = true)
+    List<Object[]> getAllSupplierPurchaseDetailsRaw();
+
+
 }

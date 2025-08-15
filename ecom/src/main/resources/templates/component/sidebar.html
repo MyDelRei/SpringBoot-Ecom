@@ -71,18 +71,19 @@
            th:classappend="${currentUri == '/Request' || currentUri == '/Request/purchase' ? 'bg-indigo-100 text-indigo-700 font-semibold' : ''}"
            class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">Request product</a>
 
-        <a th:href="@{/Request}"
+        <a th:href="@{/payment-list}"
            th:classappend="${currentUri == '' || currentUri == '' ? 'bg-indigo-100 text-indigo-700 font-semibold' : ''}"
            class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">Purchase Payment</a>
         <a th:href="@{/location}"
            th:classappend="${currentUri == '/location' || currentUri == '/location/add' ? 'bg-indigo-100 text-indigo-700 font-semibold' : ''}"
            class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">Warehouse manage</a>
 
-        <a href="#" class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">Stock product</a>
+        <a th:href="@{/stock}"
+           th:classappend="${currentUri == '/stock' || currentUri == '/location/add' ? 'bg-indigo-100 text-indigo-700 font-semibold' : ''}"
+           class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">Stock product</a>
+
+
         <a href="#" class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">Invoice detail</a>
-        <a th:href="@{/product-arrival}"
-           th:classappend="${currentUri == '/product-arrival' || currentUri == '/product-arrival/add' ? 'bg-indigo-100 text-indigo-700 font-semibold' : ''}"
-           class="block py-2 px-4 rounded-md text-sm text-gray-600 hover:bg-gray-100 transition duration-200">Product arrival</a>
       </div>
     </div>
 

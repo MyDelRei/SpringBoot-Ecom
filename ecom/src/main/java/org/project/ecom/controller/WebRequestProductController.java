@@ -42,4 +42,14 @@ public class WebRequestProductController {
         return "layout";
     }
 
+
+    @GetMapping("/payment-list")
+    public String paymentList(Model model, @RequestParam(required = false) String success, HttpServletRequest request) { // Add HttpServletRequest
+        model.addAttribute("pageTitle", "payment page");
+        model.addAttribute("successMessage", success);
+        model.addAttribute("contentFragment", "admin/payment-list");
+        model.addAttribute("currentUri", request.getRequestURI()); // Pass current URI
+        return "layout";
+    }
+
 }

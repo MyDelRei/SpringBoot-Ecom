@@ -88,22 +88,21 @@ $(document).ready(function () {
 
         const formData = {
             arrivalDate: $("#arrival_date").val(),
-            receivedById: $("#received_by").val(),
+            receivedById: parseInt($("#received_by").val(), 10) || null,
             invoiceNumber: $("#invoice_number").val(),
-            requestId: $("#request_id").val(),
+            requestId: parseInt($("#request_id").val(), 10) || null,
             items: []
         };
 
-        // Collect Form Data for Items
         let invalidRow = 0;
         $("#item-entries .item-entry").each(function () {
-            const skuId = $(this).find(".sku-select").val();
-            const quantityReceived = parseInt($(this).find(".quantity-received").val(),10) || 0;
+            const skuId = parseInt($(this).find(".sku-select").val(), 10) || null;
+            const quantityReceived = parseInt($(this).find(".quantity-received").val(), 10) || 0;
             const note = $(this).find(".note-input").val();
 
             if (skuId && quantityReceived > 0) {
                 formData.items.push({ skuId, quantityReceived, note });
-            }else {
+            } else {
                 invalidRow++;
             }
         });
@@ -113,7 +112,6 @@ $(document).ready(function () {
             return;
         }
 
-        // Send and AJAX POST request
         ajaxHelper.post("/api/v1/admin/product-arrival", formData, function () {
             Swal.fire({
                 icon: "success",
@@ -124,6 +122,7 @@ $(document).ready(function () {
             });
         }, function (err) {
             console.error("Error during submission:", err);
+            console.log(formData);
             Swal.fire({
                 icon: "error",
                 title: "Error",
@@ -131,4 +130,5 @@ $(document).ready(function () {
             });
         });
     });
+
 });

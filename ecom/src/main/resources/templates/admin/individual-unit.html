@@ -1,0 +1,195 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+    <div class="flex items-center justify-between space-y-6">
+        <h1 class="text-[33px] font-bold text-gray-800 mb-6">Individual stocking</h1>
+        <div th:if="${successMessage}" role="alert" class="mb-4 relative flex w-[400px] p-3 text-sm text-white bg-blue-600 rounded-md">
+            <span th:text="${successMessage}">Set successfully!</span>
+            <button class="flex items-center justify-center transition-all w-8 h-8 rounded-md text-white hover:bg-white/10 active:bg-white/10 absolute top-1.5 right-1.5" type="button" onclick="this.parentElement.remove()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-5 w-5" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main content div with 30px rounded corners -->
+    <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
+        <!-- Top Section: My supplier, Add supplier, Search, Filter -->
+        <div class="flex flex-col justify-between mb-6 space-y-4 md:space-y-0">
+            <div class="flex justify-between mb-6 space-y-4 md:space-y-0">
+                <h2 class="text-[27px] font-semibold text-gray-800">Listing</h2>
+                <!-- Add Individual Button -->
+                <a th:href="@{/stock/add-individual-stock}" class="bg-indigo-600 hover:bg-indigo-700 w-[210px] text-white font-semibold py-2 px-4 rounded-full shadow-md flex items-center justify-start transition duration-200">
+                    <i class="fas fa-plus mr-2"></i> Store Serial SKU
+                </a>
+            </div>
+
+            <div class="flex justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full md:w-auto">
+                <!-- Dropdown Filter -->
+                <div class="relative w-full sm:w-auto">
+                    <select id="sort-table" class="block w-[200px] py-2 px-4 border border-gray-300 rounded-full shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm appearance-none">
+                        <option>Product</option>
+                        <option>SKU</option>
+                        <option>Serial Number</option>
+                    </select>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="relative flex-grow sm:flex-grow-0 w-full sm:w-64">
+                                <span class="absolute inset-y-0 left-0 pl-3 flex items-center">
+                                    <i class="fas fa-search text-gray-600"></i>
+                                </span>
+                    <input type="text" id="search" placeholder="Search" class="w-full pl-10 pr-4 py-2 rounded-full shadow-sm border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white text-sm">
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- Individual List Table -->
+        <div class="overflow-x-auto rounded-[20px] border border-gray-200"> <!-- Outer border and rounded corners for the table container -->
+            <table class="min-w-full bg-white">
+                <thead>
+                <tr class="bg-gray-50 text-gray-700 text-left text-sm font-medium">
+                    <th class="py-3 px-4 border-b border-r border-gray-200"> <!-- Border-b for bottom, border-r for right -->
+                        <div class="inline-flex items-center">
+                            <label class="flex items-center cursor-pointer relative">
+                                <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="check7" />
+                                <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                              <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                              </svg>
+                                              </span>
+                            </label>
+                        </div>
+                    </th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">Product</th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">SKU</th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">Serial Number</th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">Stored at</th>
+                    <th class="py-3 px-4 text-center border-b border-gray-200">Action</th>
+                </tr>
+                </thead>
+                <tbody id="unit-list">
+                <!--data goes here-->
+                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                    <td class="py-3 px-4 border-r border-gray-200">
+                        <div class="inline-flex items-center">
+                            <label class="flex items-center cursor-pointer relative">
+                                <input type="checkbox" class="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-purple-600 checked:border-purple-600" id="check-${brand.brandId}" />
+                                <span class="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" stroke="currentColor" stroke-width="1">
+                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </span>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="py-3 px-4 border-r border-gray-200">Apple INC</td>
+                    <td class="py-3 px-4 border-r border-gray-200">018725323</td>
+                    <td class="py-3 px-4 border-r border-gray-200 max-w-[350px] whitespace-nowrap overflow-hidden text-ellipsis">Illi@rest.com</td>
+                    <td class="py-3 px-4 border-r border-gray-200 max-w-[350px] whitespace-nowrap overflow-hidden text-ellipsis">Location of that supplier</td>
+                    <td class="py-3 px-4 text-center space-x-2">
+                        <button id="edit-brand" class="text-blue-500 hover:text-blue-700 p-2 rounded-full hover:bg-blue-100 transition duration-200"
+                                data-id="${brand.brandId}" data-name="${brand.name}" data-slug="${brand.slug}" data-description="${brand.description}">
+                            <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <button id="delete-brand" class="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition duration-200"
+                                data-id="${brand.brandId}">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="flex items-center justify-end mt-6 space-x-1 text-gray-600"></div>
+
+
+
+
+    </div>
+
+    <!-- Fullscreen spinner overlay -->
+    <div id="loadingSpinner" class="hidden fixed inset-0 bg-blur-md bg-opacity-40 backdrop-blur-md flex items-center justify-center z-50">
+        <div class="grid min-h-[280px] min-w-[280px] place-items-center rounded-lg p-6">
+            <svg
+                    class="text-gray-300 animate-spin"
+                    viewBox="0 0 64 64"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="128"
+                    height="128"
+            >
+                <path
+                        d="M32 3C35.8083 3 39.5794 3.75011 43.0978 5.20749C46.6163 6.66488 49.8132 8.80101 52.5061 11.4939C55.199 14.1868 57.3351 17.3837 58.7925 20.9022C60.2499 24.4206 61 28.1917 61 32C61 35.8083 60.2499 39.5794 58.7925 43.0978C57.3351 46.6163 55.199 49.8132 52.5061 52.5061C49.8132 55.199 46.6163 57.3351 43.0978 58.7925C39.5794 60.2499 35.8083 61 32 61C28.1917 61 24.4206 60.2499 20.9022 58.7925C17.3837 57.3351 14.1868 55.199 11.4939 52.5061C8.801 49.8132 6.66487 46.6163 5.20749 43.0978C3.7501 39.5794 3 35.8083 3 32C3 28.1917 3.75011 24.4206 5.2075 20.9022C6.66489 17.3837 8.80101 14.1868 11.4939 11.4939C14.1868 8.80099 17.3838 6.66487 20.9022 5.20749C24.4206 3.7501 28.1917 3 32 3L32 3Z"
+                        stroke="currentColor"
+                        stroke-width="5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                ></path>
+                <path
+                        d="M32 3C36.5778 3 41.0906 4.08374 45.1692 6.16256C49.2477 8.24138 52.7762 11.2562 55.466 14.9605C58.1558 18.6647 59.9304 22.9531 60.6448 27.4748C61.3591 31.9965 60.9928 36.6232 59.5759 40.9762"
+                        stroke="currentColor"
+                        stroke-width="5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="text-gray-900"
+                ></path>
+            </svg>
+        </div>
+    </div>
+
+
+
+
+    <!-- Overlay Backdrop -->
+    <div id="editOverlay" class="fixed inset-0 bg-blur-sm bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50 hidden">
+        <!-- Modal content -->
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-md mx-4 p-6 relative">
+            <h3 class="text-xl font-semibold mb-4">Edit Individual Unit</h3>
+            <form id="editForm" class="space-y-4">
+                <div>
+                    <label for="serialNumber" class="block text-sm font-medium text-gray-700 mb-1">Serial Number</label>
+                    <input type="text" id="serialNumber" name="serialNumber" readonly
+                           class="w-full rounded-full border border-gray-300 p-3 bg-gray-100 cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                </div>
+                <div>
+                    <label for="locationSelect" class="block text-sm font-medium text-gray-700 mb-1">Select Location</label>
+                    <select id="locationSelect" name="locationSelect"
+                            class="w-full rounded-full border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        <option value="">Loading locations...</option>
+                    </select>
+                </div>
+                <div class="flex justify-end space-x-3">
+                    <button type="button" id="cancelEdit"
+                            class="rounded-full px-6 py-2 border border-gray-300 hover:bg-gray-100 transition">Cancel</button>
+                    <button type="submit" id="saveEdit"
+                            class="rounded-full px-6 py-2 bg-indigo-600 text-white hover:bg-indigo-700 transition">Save</button>
+                </div>
+            </form>
+            <!-- Close button top right -->
+            <button id="closeOverlay" type="button"
+                    class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script th:src="@{/js/ajaxhelper.js}"></script>
+    <script type="module" th:src="@{/js/Individual/list-unit.js}"></script>
+
+</section>

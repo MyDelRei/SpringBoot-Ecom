@@ -132,7 +132,7 @@ public class ImagesController {
          if (base64Data.contains(",")) {
             base64Data = base64Data.substring(base64Data.indexOf(",") + 1);
          }
-         byte[] imageBytes = java.util.Base64.getDecoder().decode(base64Data);
+         byte[] imageBytes = Base64.getDecoder().decode(base64Data);
          image.setImageBytes(imageBytes);
       }
       return image;

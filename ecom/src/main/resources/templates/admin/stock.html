@@ -1,0 +1,50 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+    <!-- Main grid container with responsive columns and gap -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+
+        <!-- Card 1: Product Arrival -->
+        <a href="#" class="block p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4">
+            <div class="flex-shrink-0">
+                <!-- Font Awesome icon for Product Arrival -->
+                <i class="fa-solid fa-truck text-2xl text-blue-500"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">Product Arrival</h3>
+            </div>
+        </a>
+
+        <!-- Card 2: Individual Unit -->
+        <a th:href="@{/stock/list-individual}" class="block p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4">
+            <div class="flex-shrink-0">
+                <!-- Font Awesome icon for Individual Unit -->
+                <i class="fa-solid fa-qrcode text-2xl text-green-500"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">Individual Unit</h3>
+            </div>
+        </a>
+
+        <!-- Card 3: Inventory -->
+        <a th:href="@{/stock/list-inventory}" class="block p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4">
+            <div class="flex-shrink-0">
+                <!-- Font Awesome icon for Inventory -->
+                <i class="fa-solid fa-boxes-stacked text-2xl text-yellow-500"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">Inventory</h3>
+            </div>
+        </a>
+
+        <!-- Card 4: ViewStocking -->
+        <a th:href="@{/stock/view-stock}" class="block p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4">
+            <div class="flex-shrink-0">
+                <!-- Font Awesome icon for ViewStocking -->
+                <i class="fa-solid fa-chart-line text-2xl text-red-500"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">ViewStocking</h3>
+            </div>
+        </a>
+
+    </div>
+</section>

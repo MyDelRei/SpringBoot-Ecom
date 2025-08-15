@@ -32,7 +32,7 @@ public class SupplierPayment {
     @Column(name = "AMOUNT", precision = 18, scale = 2)
     private BigDecimal amount;
 
-    @OneToOne(fetch = FetchType.EAGER) // Change from LAZY to EAGER
+    @OneToOne(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "REQUEST_ID")
     private PurchaseRequest request;

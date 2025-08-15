@@ -6,8 +6,6 @@ import org.project.ecom.service.SupplierPaymentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-
 @RestController
 @RequestMapping("/api/v1/supplier-payments")
 @RequiredArgsConstructor
@@ -20,8 +18,4 @@ public class SupplierPaymentController {
         paymentService.processPayment(request);
         return ResponseEntity.ok("Payment successfully recorded");
     }
-
-
-
-
 }
