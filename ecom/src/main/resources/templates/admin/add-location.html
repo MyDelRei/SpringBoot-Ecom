@@ -8,9 +8,15 @@
 
     <form id="addLocationForm" class="space-y-4">
       <div class="mb-4">
-        <label for="warehouseId" class="block text-gray-700 text-sm font-medium mb-2">Warehouse ID</label>
-        <input type="number" id="warehouseId" name="warehouseId" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200" placeholder="Enter Warehouse ID">
+        <label for="warehouseName" class="block text-gray-700 text-sm font-medium mb-2">Warehouse Name</label>
+        <select id="warehouseName" name="warehouseName"
+                class="shadow-sm border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700
+                 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-200">
+          <option value="">Loading warehouses...</option>
+        </select>
       </div>
+
+
 
       <div class="mb-4">
         <label for="section" class="block text-gray-700 text-sm font-medium mb-2">Section</label>

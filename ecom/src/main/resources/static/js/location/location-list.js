@@ -20,7 +20,6 @@ $(document).ready(function () {
             renderPagination();
             return;
         }
-
         paginated.forEach(loc => {
             const row = `
                 <tr class="border-b border-gray-200 hover:bg-gray-50">
@@ -42,16 +41,8 @@ $(document).ready(function () {
                     <td class="py-3 px-4 border-r border-gray-200 max-w-[350px] whitespace-nowrap overflow-hidden text-ellipsis">${loc.bin}</td>
                     <td class="py-3 px-4 border-r border-gray-200 max-w-[350px] whitespace-nowrap overflow-hidden text-ellipsis">${loc.note || ''}</td>
                     <td class="py-3 px-4 text-center space-x-2">
-                            <button id="edit-location"
-                                class="text-blue-500 hover:text-blue-700 p-2 rounded-full hover:bg-blue-100 transition duration-200"
-                                data-id="${loc.locationId}"
-                                data-section="${loc.section || ''}"
-                                data-aisle="${loc.aisle || ''}"
-                                data-bin="${loc.bin || ''}"
-                                data-note="${loc.note || ''}">
-                                <i class="fas fa-edit"></i>
-                            </button
-                        <button id="delete-location" class="text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition duration-200"
+                      
+                        <button class="delete-location-btn text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100 transition duration-200"
                             data-id="${loc.locationId}">
                             <i class="fas fa-trash-alt"></i>
                         </button>
@@ -227,7 +218,7 @@ $(document).ready(function () {
     $(document).on('keydown', e => { if (e.key === 'Escape' && !$overlay.hasClass('invisible')) closeOverlay(); });
 
     // Edit button click
-    $(document).on('click', '#edit-location', function () {
+    $(document).on('click', '.edit-location-btn', function () {
         const data = {
             locationId: $(this).data('id'),
             section: $(this).data('section'),
@@ -239,8 +230,19 @@ $(document).ready(function () {
     });
 
     // Delete button click with Swal confirmation
-    $(document).on('click', '#delete-location', function () {
+    $(document).on('click', '.delete-location-btn', function () {
         const locationId = $(this).data('id');
+        const $button = $(this); // Store button reference for DOM manipulation
+
+        if (!locationId) {
+            Swal.fire({
+                title: 'Error!',
+                text: 'Location ID not found.',
+                icon: 'error',
+                confirmButtonText: 'Close'
+            });
+            return;
+        }
 
         Swal.fire({
             title: 'Delete Location?',
@@ -252,20 +254,68 @@ $(document).ready(function () {
         }).then((result) => {
             if (!result.isConfirmed) return;
 
+            $button.prop('disabled', true); // Disable button during request
+
+            // Use ajaxHelper if defined, otherwise fallback to $.ajax
             if (typeof ajaxHelper !== 'undefined') {
-                ajaxHelper.post('/api/v1/admin/locations/delete-location', { locationId }, function (response) {
-                    Swal.fire('Deleted!', 'Location has been deleted.', 'success');
-                    ajaxHelper.get('/api/v1/admin/locations', function (data) {
-                        allLocations = data;
-                        applySortAndSearch(true);
+                ajaxHelper.delete(`/api/v1/admin/locations/${locationId}`, null, function () {
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'Location has been deleted.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
                     });
+                    // Update allLocations and re-render table
+                    allLocations = allLocations.filter(loc => loc.locationId !== locationId);
+                    // Adjust currentPage if it becomes empty
+                    const filtered = allLocations.filter(loc =>
+                            !currentSearchTerm || (
+                                (loc.section && loc.section.toLowerCase().includes(currentSearchTerm.toLowerCase())) ||
+                                (loc.aisle && loc.aisle.toLowerCase().includes(currentSearchTerm.toLowerCase())) ||
+                                (loc.bin && loc.bin.toLowerCase().includes(currentSearchTerm.toLowerCase())) ||
+                                (loc.note && loc.note.toLowerCase().includes(currentSearchTerm.toLowerCase()))
+                            )
+                    );
+                    totalPages = Math.ceil(filtered.length / rowsPerPage);
+                    if (currentPage > totalPages && totalPages > 0) {
+                        currentPage = totalPages;
+                    }
+                    applySortAndSearch(false);
                 }, function (err) {
-                    Swal.fire('Error', 'Failed to delete location.', 'error');
+                    console.error('Delete Location Failed:', err);
+                    const errorMessage = err.responseJSON?.message || 'Failed to delete location. Please try again.';
+                    Swal.fire({
+                        title: 'Error',
+                        text: errorMessage,
+                        icon: 'error',
+                        confirmButtonText: 'Close'
+                    });
+                }, function () {
+                    $button.prop('disabled', false); // Re-enable button
                 });
             } else {
+                // Fallback for mock data
                 allLocations = allLocations.filter(loc => loc.locationId !== locationId);
-                applySortAndSearch(true);
-                Swal.fire('Deleted!', 'Location has been deleted.', 'success');
+                const filtered = allLocations.filter(loc =>
+                        !currentSearchTerm || (
+                            (loc.section && loc.section.toLowerCase().includes(currentSearchTerm.toLowerCase())) ||
+                            (loc.aisle && loc.aisle.toLowerCase().includes(currentSearchTerm.toLowerCase())) ||
+                            (loc.bin && loc.bin.toLowerCase().includes(currentSearchTerm.toLowerCase())) ||
+                            (loc.note && loc.note.toLowerCase().includes(currentSearchTerm.toLowerCase()))
+                        )
+                );
+                totalPages = Math.ceil(filtered.length / rowsPerPage);
+                if (currentPage > totalPages && totalPages > 0) {
+                    currentPage = totalPages;
+                }
+                applySortAndSearch(false);
+                Swal.fire({
+                    title: 'Deleted!',
+                    text: 'Location has been deleted.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+                $button.prop('disabled', false);
             }
         });
     });
@@ -300,7 +350,6 @@ $(document).ready(function () {
                         applySortAndSearch(true);
                         renderTable(allLocations);
                     });
-
                 }, function (err) {
                     Swal.fire('Error', 'Failed to update location.', 'error');
                 });
