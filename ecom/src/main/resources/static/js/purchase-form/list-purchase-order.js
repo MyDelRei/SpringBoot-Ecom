@@ -239,6 +239,37 @@ $(document).ready(function() {
         });
     }
 
+    // Function to handle the search functionality
+    function handleSearch() {
+        // Get the search input value and convert to lowercase for case-insensitive comparison
+        const searchText = $("#search").val().toLowerCase();
+
+        // Iterate over each table row in the purchase order list
+        $("#PurchaseOrderList tr").each(function() {
+            const row = $(this);
+            let rowText = "";
+
+            // Concatenate the text content of specific cells for searching
+            // Get text from the 'Supplier' and 'Request date' columns
+            rowText += row.find("td:nth-child(2)").text().toLowerCase();
+            rowText += " " + row.find("td:nth-child(3)").text().toLowerCase();
+            rowText += " " + row.find("td:nth-child(4)").text().toLowerCase();
+            rowText += " " + row.find("td:nth-child(5)").text().toLowerCase();
+
+            // Check if the search text is present in the combined row text
+            if (rowText.includes(searchText)) {
+                // If a match is found, show the row
+                row.show();
+            } else {
+                // If no match is found, hide the row
+                row.hide();
+            }
+        });
+    }
+
+// Attach the handleSearch function to the keyup event of the search input field
+// This will trigger the search every time a user types in the search bar
+    $("#search").on("keyup", handleSearch);
 
     // Initial load
     loadPurchaseOrders();

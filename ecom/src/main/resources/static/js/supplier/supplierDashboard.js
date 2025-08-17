@@ -45,6 +45,48 @@ function loadSuppliers() {
             showSupplierProducts(supplierId, supplierName);
         });
     });
+
+    $(document).ready(function() {
+        $.ajax({
+            url: "/api/v1/dashboard/data",
+            type: "GET",
+            success: function(response) {
+                // Update Total Supplier
+                $("#TotalSupplier").text(response.totalSupplier);
+
+                // Update Total Purchase
+                $("#totalPurchases").text(response.totalPurchase);
+
+                // Update Last Deliver
+                if (response.recentProductArrival && response.recentProductArrival.length > 0) {
+                    // Find the latest arrival date
+                    const latestArrival = response.recentProductArrival.reduce((latest, current) => {
+                        return new Date(current.arrivalDate) > new Date(latest.arrivalDate) ? current : latest;
+                    });
+                    const lastDeliverDate = new Date(latestArrival.arrivalDate);
+                    const formattedDate = lastDeliverDate.toLocaleDateString('en-US', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric'
+                    });
+                    $("#LatestDeliver").text(formattedDate);
+                } else {
+                    $("#LatestDeliver").text("N/A");
+                }
+
+                // Update Completed Purchases
+                if (response.recentProductArrival && response.recentProductArrival.length > 0) {
+                    const completedCount = response.recentProductArrival.filter(arrival => arrival.requestStatus === "completed").length;
+                    $("#completed").text(completedCount + " purchase");
+                } else {
+                    $("#completed").text("0 purchase");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching dashboard data: " + error);
+            }
+        });
+    });
 }
 
 

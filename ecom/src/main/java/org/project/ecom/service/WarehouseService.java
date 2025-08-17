@@ -54,4 +54,8 @@ public class WarehouseService {
            throw new RuntimeException(e);
        }
    }
+
+   public Long totalWarehouse(){
+       return warehouseRepository.count();
+   }
 }

@@ -5,6 +5,7 @@ import org.project.ecom.model.CheckoutProductNonserial;
 import org.project.ecom.model.Inventory;
 import org.project.ecom.model.Sku;
 import org.project.ecom.model.dto.CheckoutNonSerialDto;
+import org.project.ecom.model.dto.RecentCheckoutProjection;
 import org.project.ecom.repository.CheckoutNonSerialRepository;
 import org.project.ecom.repository.InventoryRepository;
 import org.project.ecom.repository.SkuRepository;
@@ -66,6 +67,10 @@ public class CheckoutProductNSService {
         checkout.setSku(sku.getSkuCode());
         checkout.setQuantity((long) requestedQty);
         checkoutRepo.save(checkout);
+    }
+
+    public List<RecentCheckoutProjection> getRecentCheckouts() {
+        return checkoutRepo.findRecentCheckouts();
     }
 
 

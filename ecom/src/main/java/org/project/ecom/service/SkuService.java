@@ -78,4 +78,8 @@ public class SkuService {
                 .build()
         ).collect(Collectors.toList());
     }
+
+    public Long totalSku(){
+        return skuRepository.count();
+    }
 }

@@ -247,6 +247,10 @@ public class PurchaseService {
         return purchaseItemRepository.findPurchaseItemsWithAttributes(requestId);
     }
 
+    public Long totalPurchase(){
+        return purchaseRepository.count();
+    }
+
 
 
 

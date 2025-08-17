@@ -1,15 +1,10 @@
-
 <section th:fragment="content" class="flex-1 overflow-y-auto">
-  <!-- Container for remaining content with padding -->
   <div class="p-8">
     <h1 class="text-2xl font-semibold text-gray-800 mb-6">Supplier</h1>
 
-    <!-- Stats Cards Section -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      <!-- Card 1: Total Supplier -->
-
-        <a th:href="@{/supplier/list-supplier}">
-          <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-start">
+      <a th:href="@{/supplier/list-supplier}">
+        <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-start">
           <div class="flex items-center justify-between w-full mb-4">
             <div class="p-3 rounded-full bg-green-100 text-green-600">
               <i class="fas fa-truck text-xl"></i>
@@ -20,12 +15,11 @@
           </div>
           <p class="text-gray-500 text-sm">Total supplier</p>
           <p class="text-2xl font-bold text-gray-800" id="TotalSupplier">424</p>
-          </div>
-        </a>
+        </div>
+      </a>
 
 
 
-      <!-- Card 2: Total Purchase -->
       <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-start">
         <div class="flex items-center justify-between w-full mb-4">
           <div class="p-3 rounded-full bg-blue-100 text-blue-600">
@@ -35,11 +29,10 @@
             <i class="fas fa-ellipsis-v"></i>
           </button>
         </div>
-        <p class="text-gray-500 text-sm">Total purchase</p>
-        <p class="text-2xl font-bold text-gray-800">424</p>
+        <p class="text-gray-500 text-sm" >Total purchase</p>
+        <p class="text-2xl font-bold text-gray-800" id="totalPurchases">424</p>
       </div>
 
-      <!-- Card 3: Last Deliver -->
       <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-start">
         <div class="flex items-center justify-between w-full mb-4">
           <div class="p-3 rounded-full bg-purple-100 text-purple-600">
@@ -49,11 +42,10 @@
             <i class="fas fa-ellipsis-v"></i>
           </button>
         </div>
-        <p class="text-gray-500 text-sm">Last Deliver</p>
-        <p class="text-xl font-bold text-gray-800">3 Mar 2025</p>
+        <p class="text-gray-500 text-sm" >Last Deliver</p>
+        <p class="text-xl font-bold text-gray-800" id="LatestDeliver">3 Mar 2025</p>
       </div>
 
-      <!-- Card 4: Currently purchase -->
       <div class="bg-white rounded-lg shadow-md p-6 flex flex-col items-start">
         <div class="flex items-center justify-between w-full mb-4">
           <div class="p-3 rounded-full bg-red-100 text-red-600">
@@ -63,138 +55,29 @@
             <i class="fas fa-ellipsis-v"></i>
           </button>
         </div>
-        <p class="text-gray-500 text-sm">Currently purchase</p>
-        <p class="text-2xl font-bold text-gray-800">24 purchase</p>
+        <p class="text-gray-500 text-sm" >Completion</p>
+        <p class="text-2xl font-bold text-gray-800" id="completed">24 purchase</p>
       </div>
     </div>
 
-    <!-- Combined Section: Recent Payment, Current Purchase (Left) and My Supplier (Right) -->
     <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-6 mb-8">
-      <!-- Left Column: Recent Payment and Current Purchase -->
-      <div class="flex flex-col gap-6 w-full lg:w-1/2">
-        <!-- Recent Payment Card -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-          <h2 class="text-lg font-semibold text-gray-800 mb-4">recent payment</h2>
-          <div class="space-y-4 max-h-[200px] overflow-y-auto"> <!-- Added max-h and overflow-y-auto -->
-            <!-- Payment Item 1 -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-3">
-                <img src="https://placehold.co/40x40/DBDFEF/5864BB?text=AI" alt="Apple Inc" class="rounded-lg">
-                <div>
-                  <p class="font-medium text-gray-800">Bank Tranfer</p>
-                  <p class="text-sm text-gray-500">Apple Inc</p>
-                </div>
-              </div>
-              <p class="font-semibold text-green-600">+82.6 USD</p>
-            </div>
-            <!-- Payment Item 2 -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-3">
-                <img src="https://placehold.co/40x40/DBDFEF/5864BB?text=AI" alt="Apple Inc" class="rounded-lg">
-                <div>
-                  <p class="font-medium text-gray-800">Bank Tranfer</p>
-                  <p class="text-sm text-gray-500">Apple Inc</p>
-                </div>
-              </div>
-              <p class="font-semibold text-green-600">+82.6 USD</p>
-            </div>
-            <!-- Payment Item 3 -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-3">
-                <img src="https://placehold.co/40x40/DBDFEF/5864BB?text=S" alt="Starbucks" class="rounded-lg">
-                <div>
-                  <p class="font-medium text-gray-800">Wallet</p>
-                  <p class="text-sm text-gray-500">Starbucks</p>
-                </div>
-              </div>
-              <p class="font-semibold text-green-600">+203.33 USD</p>
-            </div>
-            <!-- Added more items to demonstrate scrollability -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-3">
-                <img src="https://placehold.co/40x40/DBDFEF/5864BB?text=G" alt="Google" class="rounded-lg">
-                <div>
-                  <p class="font-medium text-gray-800">Online Payment</p>
-                  <p class="text-sm text-gray-500">Google</p>
-                </div>
-              </div>
-              <p class="font-semibold text-green-600">+150.00 USD</p>
-            </div>
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-3">
-                <img src="https://placehold.co/40x40/DBDFEF/5864BB?text=A" alt="Amazon" class="rounded-lg">
-                <div>
-                  <p class="font-medium text-gray-800">Credit Card</p>
-                  <p class="text-sm text-gray-500">Amazon</p>
-                </div>
-              </div>
-              <p class="font-semibold text-green-600">+75.20 USD</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Current Purchase -->
-        <div class="bg-white rounded-lg shadow-md p-6">
-          <h2 class="text-lg font-semibold text-gray-800 mb-4">Current purchase</h2>
-          <div class="space-y-4 max-h-[200px] overflow-y-auto"> <!-- Added max-h and overflow-y-auto -->
-            <!-- Purchase Item 1 -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-3">
-                <img src="https://placehold.co/40x40/DBDFEF/5864BB?text=AI" alt="Apple Inc" class="rounded-lg">
-                <div>
-                  <p class="font-medium text-gray-800">Date : 22-7-2025</p>
-                  <p class="text-sm text-gray-500">Apple Inc</p>
-                </div>
-              </div>
-              <button class="h-[32px] px-3 py-1 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition-colors">Show more</button>
-            </div>
-            <!-- Purchase Item 2 -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-3">
-                <img src="https://placehold.co/40x40/DBDFEF/5864BB?text=L" alt="Lenovo" class="rounded-lg">
-                <div>
-                  <p class="font-medium text-gray-800">Date : 22-7-2025</p>
-                  <p class="text-sm text-gray-500">Lenovo</p>
-                </div>
-              </div>
-              <button class="h-[32px] px-3 py-1 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition-colors">Show more</button>
-            </div>
-            <!-- Added more items to demonstrate scrollability -->
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-3">
-                <img src="https://placehold.co/40x40/DBDFEF/5864BB?text=S" alt="Samsung" class="rounded-lg">
-                <div>
-                  <p class="font-medium text-gray-800">Date : 21-7-2025</p>
-                  <p class="text-sm text-gray-500">Samsung</p>
-                </div>
-              </div>
-              <button class="h-[32px] px-3 py-1 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition-colors">Show more</button>
-            </div>
-          </div>
-          <button class="btn-custom-primary w-full py-2 mt-6 rounded-full font-medium">View All Purchase</button>
-        </div>
-      </div>
-
-      <!-- Right Column: My Supplier Card -->
-      <div id="supplierContainer" class="bg-white rounded-lg shadow-md p-6 flex flex-col w-full lg:w-1/2">
+      <div id="supplierContainer" class="bg-white rounded-lg shadow-md p-6 flex flex-col w-full">
         <div class="flex items-center justify-between mb-4">
           <h2 class="text-lg font-semibold text-gray-800">My supplier</h2>
           <a th:href="@{/supplier/add-supplier}" class="btn-add-custom px-4 py-2 rounded-lg font-medium">
             <i class="fas fa-plus mr-2"></i>Add supplier
           </a>
         </div>
-        <div class="space-y-4 flex-grow max-h-[350px] overflow-y-auto"> <!-- Added max-h and overflow-y-auto -->
-          <!-- Supplier Item 1 -->
-          <div id="supplierCard" class="h-[68px] flex items-center justify-between border border-slate-200 p-4 rounded-[15px]">
-            <div class="flex items-center space-x-3">
-              <img src="https://placehold.co/40x40/DBDFEF/5864BB?text=AI" alt="Apple Inc" class="rounded-lg">
-              <div>
-                <p class="text-sm text-gray-500">Supplier</p>
-                <p class="font-medium text-gray-800">Apple Inc</p>
-              </div>
+        <div class="space-y-4 flex-grow max-h-[350px] overflow-y-auto"> <div id="supplierCard" class="h-[68px] flex items-center justify-between border border-slate-200 p-4 rounded-[15px]">
+          <div class="flex items-center space-x-3">
+            <img src="https://placehold.co/40x40/DBDFEF/5864BB?text=AI" alt="Apple Inc" class="rounded-lg">
+            <div>
+              <p class="text-sm text-gray-500">Supplier</p>
+              <p class="font-medium text-gray-800">Apple Inc</p>
             </div>
-            <button class="h-[32px] px-3 py-1 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition-colors">Show more</button>
           </div>
+          <button class="h-[32px] px-3 py-1 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition-colors">Show more</button>
+        </div>
 
 
         </div>
@@ -206,7 +89,6 @@
 
 
   </div>
-  <!-- Overlay with products -->
   <div id="overlayWithProducts" class="
     fixed inset-0 z-50
     flex items-start justify-center
@@ -228,7 +110,6 @@
     </div>
   </div>
 
-  <!-- Overlay no products -->
   <div id="overlayNoProducts" class="
     fixed inset-0 z-50
     flex items-start justify-center
@@ -258,4 +139,3 @@
 
 
 </section>
-

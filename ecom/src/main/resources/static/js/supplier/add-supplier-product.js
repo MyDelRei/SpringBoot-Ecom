@@ -233,6 +233,53 @@ $(document).ready(function () {
         });
     });
 
+    // Function to handle the search for the "Product" table
+    function searchProducts() {
+        const searchText = $("#searchProductInput").val().toLowerCase();
+
+        $("#productTableBody tr").each(function() {
+            const row = $(this);
+            let rowText = "";
+
+            // Combine text from relevant columns: Product Name, SKU CODE, and Attribute
+            rowText += row.find("td:nth-child(2)").text().toLowerCase();
+            rowText += " " + row.find("td:nth-child(3)").text().toLowerCase();
+            rowText += " " + row.find("td:nth-child(4)").text().toLowerCase();
+
+            if (rowText.includes(searchText)) {
+                row.show();
+            } else {
+                row.hide();
+            }
+        });
+    }
+
+// Function to handle the search for the "Supplier product list" table
+    function searchSupplierProducts() {
+        const searchText = $("#searchSupplierProductInput").val().toLowerCase();
+
+        $("#supplierProductTableBody tr").each(function() {
+            const row = $(this);
+            let rowText = "";
+
+            // Combine text from relevant columns: Product Name, SKU CODE, Status, and Lead Day
+            rowText += row.find("td:nth-child(2)").text().toLowerCase();
+            rowText += " " + row.find("td:nth-child(3)").text().toLowerCase();
+            rowText += " " + row.find("td:nth-child(4)").text().toLowerCase();
+            rowText += " " + row.find("td:nth-child(5)").text().toLowerCase();
+
+            if (rowText.includes(searchText)) {
+                row.show();
+            } else {
+                row.hide();
+            }
+        });
+    }
+
+// Attach the search functions to the keyup event of their respective input fields
+    $("#searchProductInput").on("keyup", searchProducts);
+    $("#searchSupplierProductInput").on("keyup", searchSupplierProducts);
+
 
 
 

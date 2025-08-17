@@ -278,6 +278,10 @@ public class SupplierService {
         return obj.toString();
     }
 
+    public Long totalSupplier(){
+        return supplierRepository.count();
+    }
+
 
 
 

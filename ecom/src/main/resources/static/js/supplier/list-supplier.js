@@ -42,9 +42,20 @@ $(document).ready(function () {
                     <td class="py-3 px-4 border-r border-gray-200 max-w-[350px] whitespace-nowrap overflow-hidden text-ellipsis">${s.address}</td>
                     <td class="py-3 px-4 border-r border-gray-200 max-w-[350px] whitespace-nowrap overflow-hidden text-ellipsis">
                         <button class="show-more-btn h-[32px] px-3 py-1 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition-colors" data-id="${s.id}">Show more</button>
+                       
                     </td>
+                    
+                     <td class="py-3 px-4 border-r border-gray-200 max-w-[350px] whitespace-nowrap overflow-hidden text-ellipsis">
+                        
+                        <button class="add-more-btn h-[32px] px-3 py-1 bg-black text-white rounded-full text-sm hover:bg-gray-800 transition-colors" 
+                            data-supplier-id="${s.id}" 
+                            data-supplier-name="${s.supplierName}">
+                            add more
+                        </button>
+                    </td>
+                    
                     <td class="py-3 px-4 text-center space-x-2">
-                        <a href="/supplier/update-product?supplierId=${s.id}" class="edit-btn text-blue-500 hover:text-blue-700 p-2 rounded-full hover:bg-blue-100" data-id="${s.id}" ">
+                        <a href="/supplier/update-product?supplierId=${s.id}" class="edit-btn text-blue-500 hover:text-blue-700 p-2 rounded-full hover:bg-blue-100"  data-id="${s.id}" ">
                             <i class="fas fa-pencil-alt"></i>
                         </a>
                         <button class="delete-btn text-red-500 hover:text-red-700 p-2 rounded-full hover:bg-red-100" data-id="${s.id}">
@@ -244,6 +255,17 @@ $(document).ready(function () {
 
         window.location.href = `/supplier/add-product?supplierId=${encodedId}&supplierName=${encodedName}`;
     });
+
+    $(document).on('click', '.add-more-btn', function () {
+        const supplierName = $(this).data('supplier-name');
+        const supplierId = $(this).data('supplier-id');
+
+        const encodedName = encodeURIComponent(supplierName);
+        const encodedId = encodeURIComponent(supplierId);
+
+        window.location.href = `/supplier/add-product?supplierId=${encodedId}&supplierName=${encodedName}`;
+    });
+
 
 
 
