@@ -22,3 +22,11 @@ A comprehensive e-commerce application built with **Spring Boot**, designed for 
 - **Others**: Hibernate Validator, Sweet Alert, FontAwesome, FSLightbox, TinyMCE  
 
 ---
+A screenshot of our app
+<img width="1497" height="864" alt="image" src="https://github.com/user-attachments/assets/b276148b-eaba-402a-a33d-278f29c5fa4c" />
+
+## 🛠️ To run this project
+- **Docker**: please create an container to run oracle db
+- - **backend**: run mvn flyway:migrate for mac || ./mvn flyway:migrate for window ( i believed ) make sure the container is run
+  
+
