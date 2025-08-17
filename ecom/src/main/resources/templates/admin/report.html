@@ -1,0 +1,272 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+
+
+
+    <div class="p-8 min-h-screen">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Inventory Reports</h1>
+
+        <!-- Tab Navigation - now styled entirely with Tailwind classes -->
+        <div class="mb-4 border-b border-gray-200">
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" role="tablist">
+                <li class="me-2" role="presentation">
+                    <button
+                            class="tab-button inline-block p-4 border-b-2 rounded-t-lg transition-colors duration-200 ease-in-out
+                           text-purple-600 border-purple-600"
+                            id="sales-report-tab" data-target="sales-report-content" type="button"
+                            role="tab" aria-controls="sales-report" aria-selected="true"
+                            data-active-classes="text-purple-600 border-purple-600"
+                            data-inactive-classes="text-gray-500 hover:text-gray-600 border-transparent hover:border-gray-300">
+                        Sales Report
+                    </button>
+                </li>
+                <li class="me-2" role="presentation">
+                    <button
+                            class="tab-button inline-block p-4 border-b-2 rounded-t-lg transition-colors duration-200 ease-in-out
+                           text-gray-500 hover:text-gray-600 border-transparent hover:border-gray-300"
+                            id="inventory-report-tab" data-target="inventory-report-content" type="button"
+                            role="tab" aria-controls="inventory-report" aria-selected="false"
+                            data-active-classes="text-purple-600 border-purple-600"
+                            data-inactive-classes="text-gray-500 hover:text-gray-600 border-transparent hover:border-gray-300">
+                        Inventory Report
+                    </button>
+                </li>
+                <li class="me-2" role="presentation">
+                    <button
+                            class="tab-button inline-block p-4 border-b-2 rounded-t-lg transition-colors duration-200 ease-in-out
+                           text-gray-500 hover:text-gray-600 border-transparent hover:border-gray-300"
+                            id="supplier-report-tab" data-target="supplier-report-content" type="button"
+                            role="tab" aria-controls="supplier-report" aria-selected="false"
+                            data-active-classes="text-purple-600 border-purple-600"
+                            data-inactive-classes="text-gray-500 hover:text-gray-600 border-transparent hover:border-gray-300">
+                        Supplier Report
+                    </button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Tab Content -->
+        <div id="tab-content">
+            <!-- Sales Report Content (initially visible) -->
+            <div id="sales-report-content" role="tabpanel" aria-labelledby="sales-report-tab">
+                <div class="bg-white rounded-xl shadow-lg p-6 space-y-4">
+                    <div class="flex items-center space-x-4">
+                        <h2 class="text-xl font-semibold text-gray-800">Product Sales Report</h2>
+                        <!-- Search Input -->
+                        <div class="relative flex-grow max-w-lg">
+                            <input type="text" id="sales-search-input" placeholder="Search sales data..." class="w-full pl-10 pr-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product ID</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sales Quantity</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sale Date</th>
+                            </tr>
+                            </thead>
+                            <tbody id="salesTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Data will be populated by jQuery -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inventory Report Content (initially hidden) -->
+            <div id="inventory-report-content" class="hidden" role="tabpanel" aria-labelledby="inventory-report-tab">
+                <div class="bg-white rounded-xl shadow-lg p-6 space-y-4">
+                    <div class="flex items-center space-x-4">
+                        <h2 class="text-xl font-semibold text-gray-800">Current Inventory Report</h2>
+                        <!-- Search Input -->
+                        <div class="relative flex-grow max-w-lg">
+                            <input type="text" id="inventory-search-input" placeholder="Search inventory data..." class="w-full pl-10 pr-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Current Stock</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Location</th>
+                            </tr>
+                            </thead>
+                            <tbody id="inventoryTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Data will be populated by jQuery -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supplier Report Content (initially hidden) -->
+            <div id="supplier-report-content" class="hidden" role="tabpanel" aria-labelledby="supplier-report-tab">
+                <div class="bg-white rounded-xl shadow-lg p-6 space-y-4">
+                    <div class="flex items-center space-x-4">
+                        <h2 class="text-xl font-semibold text-gray-800">Supplier Report</h2>
+                        <!-- Search Input -->
+                        <div class="relative flex-grow max-w-lg">
+                            <input type="text" id="supplier-search-input" placeholder="Search supplier data..." class="w-full pl-10 pr-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier ID</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Supplier Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Products</th>
+                            </tr>
+                            </thead>
+                            <tbody id="supplierTableBody" class="bg-white divide-y divide-gray-200">
+                            <!-- Data will be populated by jQuery -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // --- Demo data for each report ---
+            const reportData = {
+                sales: [
+                    { id: 101, name: 'Laptop', quantity: 15, date: '2024-07-29' },
+                    { id: 102, name: 'Monitor', quantity: 30, date: '2024-07-28' },
+                    { id: 103, name: 'Keyboard', quantity: 50, date: '2024-07-27' },
+                    { id: 104, name: 'Mouse', quantity: 75, date: '2024-07-27' },
+                    { id: 105, name: 'Webcam', quantity: 20, date: '2024-07-26' },
+                    { id: 106, name: 'Headphones', quantity: 45, date: '2024-07-25' }
+                ],
+                inventory: [
+                    { sku: 'SKU-LPT', name: 'Laptop', stock: 50, location: 'WH-A1' },
+                    { sku: 'SKU-MTR', name: 'Monitor', stock: 200, location: 'WH-B2' },
+                    { sku: 'SKU-KYB', name: 'Keyboard', stock: 150, location: 'WH-C3' },
+                    { sku: 'SKU-MOU', name: 'Mouse', stock: 300, location: 'WH-C3' },
+                    { sku: 'SKU-WBC', name: 'Webcam', stock: 75, location: 'WH-D4' },
+                    { sku: 'SKU-HDP', name: 'Headphones', stock: 120, location: 'WH-E5' }
+                ],
+                supplier: [
+                    { id: 201, name: 'Tech Solutions Inc.', contact: 'Jane Doe', total_products: 50 },
+                    { id: 202, name: 'Global Components', contact: 'John Smith', total_products: 120 },
+                    { id: 203, name: 'Hardware Hub', contact: 'Emily White', total_products: 75 },
+                    { id: 204, name: 'Accessory Alliance', contact: 'Chris Green', total_products: 90 }
+                ]
+            };
+
+            // --- Function to render table content based on report type and search query ---
+            function renderTable(reportType, query = '') {
+                const data = reportData[reportType];
+                const tableBodyId = `${reportType}TableBody`;
+                const $tableBody = $(`#${tableBodyId}`);
+                $tableBody.empty(); // Clear previous data
+
+                const filteredData = data.filter(item => {
+                    const searchString = query.toLowerCase();
+                    // Check if any value in the item object contains the search query
+                    return Object.values(item).some(value =>
+                        String(value).toLowerCase().includes(searchString)
+                    );
+                });
+
+                filteredData.forEach(item => {
+                    let row = '';
+                    if (reportType === 'sales') {
+                        row = `
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.id}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${item.name}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.quantity}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.date}</td>
+                        </tr>
+                    `;
+                    } else if (reportType === 'inventory') {
+                        row = `
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${item.sku}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.name}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.stock}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.location}</td>
+                        </tr>
+                    `;
+                    } else if (reportType === 'supplier') {
+                        row = `
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.id}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${item.name}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.contact}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${item.total_products}</td>
+                        </tr>
+                    `;
+                    }
+                    $tableBody.append(row);
+                });
+            }
+
+            // --- Event handlers for tab switching and search ---
+            $('.tab-button').on('click', function() {
+                const $this = $(this);
+                const targetId = $this.data('target');
+                const reportType = $this.attr('id').split('-')[0];
+
+                // Remove active classes and add inactive classes to all buttons
+                $('.tab-button').each(function() {
+                    const $button = $(this);
+                    $button.removeClass($button.data('active-classes')).addClass($button.data('inactive-classes'));
+                });
+
+                // Add active classes to the clicked button
+                $this.removeClass($this.data('inactive-classes')).addClass($this.data('active-classes'));
+
+                // Hide all content divs and show the target one
+                $('[role="tabpanel"]').addClass('hidden');
+                $(`#${targetId}`).removeClass('hidden');
+
+                // Clear the search input and render the table for the newly shown tab
+                $(`#${reportType}-search-input`).val('');
+                renderTable(reportType);
+            });
+
+            // Search input keyup event listener for each report type
+            $('#sales-search-input').on('keyup', function() {
+                renderTable('sales', $(this).val());
+            });
+            $('#inventory-search-input').on('keyup', function() {
+                renderTable('inventory', $(this).val());
+            });
+            $('#supplier-search-input').on('keyup', function() {
+                renderTable('supplier', $(this).val());
+            });
+
+            // Initial render on page load for the default active tab
+            renderTable('sales');
+        });
+    </script>
+
+
+
+</section>

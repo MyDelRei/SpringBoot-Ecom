@@ -1,10 +1,118 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+  <div class="space-y-6">
+    <!-- Dashboard Header -->
+    <h1 class="text-3xl font-bold text-gray-800">Inventory Dashboard</h1>
+    <p class="text-gray-600">Overview of key inventory and supplier metrics.</p>
 
-<div th:fragment="content">
-  <h1 class="text-2xl font-semibold text-gray-800 mb-6">Main content</h1>
+    <!-- Summary Cards Section -->
+    <div id="summary-cards" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Card for Total Products -->
+      <div class="bg-white rounded-xl shadow-lg p-6 flex items-center space-x-4">
+        <div class="flex-shrink-0 bg-blue-100 rounded-full p-3">
+          <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M12 20.354a4 4 0 110-5.292m0 5.292a4 4 0 100-5.292"></path>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-gray-500 text-sm font-medium uppercase">Total Products</h2>
+          <p id="totalProducts" class="mt-1 text-2xl font-semibold text-gray-900">0</p>
+        </div>
+      </div>
 
-  <div class="bg-white p-6 rounded-lg shadow-md min-h-[calc(100vh-180px)] flex items-center justify-center">
-    <img class="rounded-full w-[500px] h-[500px] object-cover shadow-lg border-4 border-white transform hover:scale-105 transition-transform duration-300"
-         src="https://scontent.fpnh9-2.fna.fbcdn.net/v/t39.30808-6/415933797_122110804700159617_2043111194882354917_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHqF5Mtdm3O2rF-y8JlwjNWUlZfUtgfPNZSVl9S2B881mfmuUIT__TmfVTWm-Qi0fuR4MgNXl_tjpi2eADrVyG8&_nc_ohc=v1BA4C1MKKwQ7kNvwGsebKR&_nc_oc=AdmsdCIYOHBfPtBEnbNYJuwHVMzDBvSReJSCXzJPDhaMZ7e_XH_9anHc-1rKTOuqe08&_nc_zt=23&_nc_ht=scontent.fpnh9-2.fna&_nc_gid=RVz-lv6GIodlrGYysshKbw&oh=00_AfT_83oPkxR4ZALps0yCTkPX_CZsvgpcEY3E5uirHVjAMQ&oe=6875B469"
-         alt="Chan money">
+      <!-- Card for Total Suppliers -->
+      <div class="bg-white rounded-xl shadow-lg p-6 flex items-center space-x-4">
+        <div class="flex-shrink-0 bg-green-100 rounded-full p-3">
+          <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h-4a2 2 0 01-2-2v-2a2 2 0 012-2h4a2 2 0 012 2v2a2 2 0 01-2 2z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9a3 3 0 100-6 3 3 0 000 6z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4"></path>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-gray-500 text-sm font-medium uppercase">Total Suppliers</h2>
+          <p id="totalSuppliers" class="mt-1 text-2xl font-semibold text-gray-900">0</p>
+        </div>
+      </div>
+
+      <!-- Card for Total Warehouses -->
+      <div class="bg-white rounded-xl shadow-lg p-6 flex items-center space-x-4">
+        <div class="flex-shrink-0 bg-purple-100 rounded-full p-3">
+          <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5a2 2 0 00-2 2v2a2 2 0 002 2h14a2 2 0 002-2v-2a2 2 0 00-2-2z"></path>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-gray-500 text-sm font-medium uppercase">Total Warehouses</h2>
+          <p id="totalWarehouses" class="mt-1 text-2xl font-semibold text-gray-900">0</p>
+        </div>
+      </div>
+
+      <!-- Card for Open Purchase Requests -->
+      <div class="bg-white rounded-xl shadow-lg p-6 flex items-center space-x-4">
+        <div class="flex-shrink-0 bg-red-100 rounded-full p-3">
+          <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5V3a2 2 0 012-2h2a2 2 0 012 2v2m-6 9l2 2 4-4"></path>
+          </svg>
+        </div>
+        <div>
+          <h2 class="text-gray-500 text-sm font-medium uppercase">Open Requests</h2>
+          <p id="openRequests" class="mt-1 text-2xl font-semibold text-gray-900">0</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <!-- Purchase Request Status Chart -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Purchase Request Status</h2>
+        <canvas id="purchaseRequestStatusChart"></canvas>
+      </div>
+
+      <!-- Products by Brand Chart -->
+      <div class="bg-white rounded-xl shadow-lg p-6">
+        <h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Checkouts</h2>
+        <div class="overflow-x-auto">
+          <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Checkout Date</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU</th>
+              <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+            </tr>
+            </thead>
+            <tbody id="recentCheckoutsTableBody" class="bg-white divide-y divide-gray-200">
+            <!-- Data will be populated by jQuery -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Product Arrivals Table Section -->
+    <div class="bg-white rounded-xl shadow-lg p-6">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Product Arrivals</h2>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Arrival Date</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Request ID</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity Received</th>
+            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Received By</th>
+          </tr>
+          </thead>
+          <tbody id="arrivalsTableBody" class="bg-white divide-y divide-gray-200">
+          <!-- Data will be populated by jQuery -->
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
-  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script th:src="@{/js/dashboard.js}"></script>
+
+</section>

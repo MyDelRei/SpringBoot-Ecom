@@ -73,4 +73,9 @@ public class InventoryController {
 
         return inventoryService.getInventoryViewPaged(searchTerm, page, size);
     }
+
+    @GetMapping("/find-sku")
+    public List<InventorySkuProjection> getInventoryBySku(@RequestParam String sku) {
+        return inventoryService.getInventoryBySku(sku);
+    }
 }

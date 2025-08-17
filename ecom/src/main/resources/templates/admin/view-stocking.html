@@ -15,12 +15,7 @@
     <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
 
         <div class="flex flex-col justify-between mb-6 space-y-4 md:space-y-0">
-            <div class="flex justify-between mb-6 space-y-4 md:space-y-0">
-                <h2 class="text-[27px] font-semibold text-gray-800">Listing</h2>
-                <a href="" class="bg-indigo-600 hover:bg-indigo-700 w-[210px] text-white font-semibold py-2 px-4 rounded-full shadow-md flex items-center justify-start transition duration-200">
-                    <i class="fas fa-plus mr-2"></i> Store Serial SKU
-                </a>
-            </div>
+
 
             <div class="flex justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full md:w-auto">
                 <div class="relative w-full sm:w-auto">
@@ -58,10 +53,10 @@
                     </th>
                     <th class="py-3 px-4 border-b border-r border-gray-200">Product</th>
                     <th class="py-3 px-4 border-b border-r border-gray-200">SKU</th>
-                    <th class="py-3 px-4 border-b border-r border-gray-200">Serialized?</th>
-                    <th class="py-3 px-4 border-b border-r border-gray-200">Category</th>
-                    <th class="py-3 px-4 border-b border-r border-gray-200">Location</th>
-                    <th class="py-3 px-4 border-b border-r border-gray-200">Qty</th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">Serialized</th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">Store at</th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">totalQuantity</th>
+                    <th class="py-3 px-4 border-b border-r border-gray-200">locationNote</th>
                     <th class="py-3 px-4 text-center border-b border-gray-200">Action</th>
                 </tr>
                 </thead>
@@ -136,6 +131,28 @@
             </svg>
         </div>
     </div>
+
+    <div id="overlay" class="fixed inset-0 backdrop-blur-md hidden flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl shadow-lg w-96 p-6 relative">
+
+            <!-- Close button -->
+            <button id="closeOverlay" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700">
+                ✖
+            </button>
+
+            <!-- Card Content -->
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">Item Details</h2>
+            <div id="overlayContent" class="space-y-2 text-gray-700">
+                <!-- Dynamic data goes here -->
+            </div>
+
+            <!-- Print Button -->
+            <button id="printOverlay" class="mt-4 bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
+                Print Sticker
+            </button>
+        </div>
+    </div>
+
 
 
     <th:script>

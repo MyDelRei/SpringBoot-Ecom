@@ -228,6 +228,11 @@ public class InventoryService {
     }
 
 
+    public List<InventorySkuProjection> getInventoryBySku(String sku) {
+        return inventoryRepository.findBySku(sku);
+    }
+
+
 
 
 

@@ -1,8 +1,11 @@
 package org.project.ecom.repository;
 
+import jakarta.validation.constraints.NotNull;
 import org.project.ecom.model.Inventory;
+import org.project.ecom.model.Sku;
 import org.project.ecom.model.dto.ArrivalSkuNotSerializeDto;
 import org.project.ecom.model.dto.InventorySkuDetailProjection;
+import org.project.ecom.model.dto.InventorySkuProjection;
 import org.project.ecom.model.dto.InventoryViewProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +16,27 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface InventoryRepository extends JpaRepository<Inventory, Long> {
+
+//    @Query(value = """
+//    SELECT
+//        s.sku_id AS skuId,
+//        pa.arrival_id AS arrivalId,
+//        s.sku_code AS skuCode,
+//        pa.arrival_date AS arrivalDate,
+//        pia.quantity_received AS quantityReceived
+//    FROM
+//        Product_Arrival pa
+//    JOIN
+//        Product_Item_Arrival pia ON pa.arrival_id = pia.arrival_id
+//    JOIN
+//        sku s ON pia.sku_id = s.sku_id
+//    WHERE
+//        s.is_serialized = 'N'
+//    ORDER BY
+//        s.sku_code,
+//        pa.arrival_date
+//    """, nativeQuery = true)
+//    List<ArrivalSkuNotSerializeDto> findNonSerializedSkuArrivals();
 
     @Query(value = """
     SELECT
@@ -27,21 +51,18 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
         Product_Item_Arrival pia ON pa.arrival_id = pia.arrival_id
     JOIN
         sku s ON pia.sku_id = s.sku_id
-    JOIN (
-        SELECT
-            pia2.sku_id,
-            MAX(pa2.arrival_date) AS latestArrivalDate
-        FROM
-            Product_Arrival pa2
-        JOIN
-            Product_Item_Arrival pia2 ON pa2.arrival_id = pia2.arrival_id
-        GROUP BY
-            pia2.sku_id
-    ) latest ON latest.sku_id = s.sku_id AND latest.latestArrivalDate = pa.arrival_date
+    JOIN
+        Purchase_Request pr ON pa.request_id = pr.request_id
     WHERE
         s.is_serialized = 'N'
+        AND pr.status = 'approved'
+    ORDER BY
+        s.sku_code,
+        pa.arrival_date
     """, nativeQuery = true)
     List<ArrivalSkuNotSerializeDto> findNonSerializedSkuArrivals();
+
+
 
     @Query("SELECT COALESCE(SUM(i.quantity), 0) FROM Inventory i WHERE i.arrival.id = :arrivalId AND i.sku.skuId = :skuId")
     Integer findTotalQuantityStoredByArrivalIdAndSkuId(@Param("arrivalId") Long arrivalId, @Param("skuId") Long skuId);
@@ -132,6 +153,17 @@ public interface InventoryRepository extends JpaRepository<Inventory, Long> {
             Pageable pageable);
 
 
+    @Query(value = "SELECT s.sku_code AS sku, " +
+            "l.section || ' > ' || l.aisle || ' > ' || l.bin AS location " +
+            "FROM Inventory i " +
+            "JOIN Sku s ON i.sku_id = s.sku_id " +
+            "JOIN Location l ON i.current_location_id = l.location_id " +
+            "WHERE s.sku_code = :sku", nativeQuery = true)
+    List<InventorySkuProjection> findBySku(@Param("sku") String sku);
+
+
+
+    List<Inventory> findBySku(@NotNull Sku sku);
 
 
 }

@@ -122,5 +122,10 @@ public class IndividualService {
     }
 
 
+    public List<CheckOutSnProjection> getUnitBySerialNumber(String serialNumber) {
+        return individualUnitRepository.findByCheckOutSerialNumber(serialNumber);
+    }
+
+
 
 }

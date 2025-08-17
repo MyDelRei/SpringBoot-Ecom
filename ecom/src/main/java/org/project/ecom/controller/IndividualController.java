@@ -70,5 +70,11 @@ public class IndividualController {
     }
 
 
+    @GetMapping("/find-sn")
+    public List<CheckOutSnProjection> getUnitBySerialNumber(@RequestParam String serialNumber) {
+        return individualUnitService.getUnitBySerialNumber(serialNumber);
+    }
+
+
 
 }

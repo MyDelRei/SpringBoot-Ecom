@@ -3,6 +3,7 @@ package org.project.ecom.repository;
 import org.project.ecom.model.IndividualUnit;
 import org.project.ecom.model.dto.ArrivalSkuDetailsDTO;
 import org.project.ecom.model.dto.ArrivalSkuProjection;
+import org.project.ecom.model.dto.CheckOutSnProjection;
 import org.project.ecom.model.dto.IndividualUnitDetailProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -101,4 +102,16 @@ public interface IndividualUnitRepository extends JpaRepository<IndividualUnit, 
 
     Optional<IndividualUnit> findBySerialNumber(String serialNumber);
 
+
+    @Query(value = "SELECT " +
+            "s.sku_code AS sku, " +
+            "iu.serial_number AS serialNumber, " +
+            "1 AS qty, " +
+            "l.section || ' > ' || l.aisle || ' > ' || l.bin AS location " +
+            "FROM Individual_Unit iu " +
+            "JOIN Sku s ON iu.sku_id = s.sku_id " +
+            "JOIN Location l ON iu.current_location_id = l.location_id " +
+            "WHERE iu.serial_number = :serialNumber",
+            nativeQuery = true)
+    List<CheckOutSnProjection> findByCheckOutSerialNumber(@Param("serialNumber") String serialNumber);
 }

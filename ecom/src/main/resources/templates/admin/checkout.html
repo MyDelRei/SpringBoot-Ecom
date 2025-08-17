@@ -1,0 +1,28 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto">
+  <!-- Main grid container with responsive columns and gap -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+
+
+    <a th:href="@{/checkout/sn}" class="block p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4">
+      <div class="flex-shrink-0">
+        <!-- Font Awesome icon for ViewStocking -->
+        <i class="fa-solid fa-box-open text-2xl" style="color: #B197FC;"></i>
+      </div>
+      <div>
+        <h3 class="text-lg font-semibold text-gray-800">Serialize Product</h3>
+      </div>
+    </a>
+
+
+    <a th:href="@{/checkout/ns}" class="block p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4">
+      <div class="flex-shrink-0">
+        <!-- Font Awesome icon for ViewStocking -->
+        <i class="fa-solid fa-box-open text-2xl" style="color: #B197FC;"></i>
+      </div>
+      <div>
+        <h3 class="font-semibold text-gray-800 text-lg">Non Serialize Product</h3>
+      </div>
+    </a>
+
+  </div>
+</section>

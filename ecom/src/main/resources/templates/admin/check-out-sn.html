@@ -1,0 +1,54 @@
+<section th:fragment="content" class="flex-1 p-6 overflow-y-auto" xmlns:th="http://www.thymeleaf.org">
+  <h1 class="text-2xl font-semibold text-gray-800 mb-6">Check Out</h1>
+
+  <div class="bg-white p-6 rounded-[30px] shadow-md min-h-[calc(100vh-180px)]">
+    <h2 class="text-xl font-semibold text-gray-800 mb-6">Information</h2>
+
+    <form id="addBrandForm">
+      <div class="mb-4 flex items-end space-x-4">
+        <div class="w-full">
+          <label for="serialNumber" class="block text-gray-700 text-sm font-medium mb-2">Serial number</label>
+          <input type="text" id="serialNumber" name="serialNumber" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter Serial number">
+        </div>
+        <button id="search" class="bg-black hover:bg-slate-700 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Search</button>
+      </div>
+
+      <div class="mb-4">
+        <label for="Sku" class="block text-gray-700 text-sm font-medium mb-2">Sku</label>
+        <input type="text" id="Sku" name="Sku" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter slug">
+      </div>
+
+      <div class="mb-4">
+        <label for="serialNumber2" class="block text-gray-700 text-sm font-medium mb-2">Serial number</label>
+        <input type="text" id="serialNumber2" name="serialNumber2" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter slug">
+      </div>
+
+      <div class="mb-4">
+        <label for="Qty" class="block text-gray-700 text-sm font-medium mb-2">Quantity</label>
+        <input type="text" id="Qty" name="Qty" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter slug">
+      </div>
+
+      <div class="mb-4">
+        <label for="location" class="block text-gray-700 text-sm font-medium mb-2">From</label>
+        <input type="text" id="location" name="location" class="shadow-sm appearance-none border border-gray-300 rounded-full w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition duration-200" placeholder="Enter slug">
+      </div>
+
+
+
+      <div class="flex justify-end space-x-4">
+        <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2.5 px-6 rounded-full shadow-md transition duration-200">Check out</button>
+
+      </div>
+    </form>
+  </div>
+
+  <th:script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script th:src="@{/js/ajaxhelper.js}"></script>
+    <script th:src="@{/js/checkout/individual-co.js}"></script>
+  </th:script>
+
+
+</section>

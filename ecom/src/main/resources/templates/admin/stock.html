@@ -42,7 +42,28 @@
                 <i class="fa-solid fa-chart-line text-2xl text-red-500"></i>
             </div>
             <div>
-                <h3 class="text-lg font-semibold text-gray-800">ViewStocking</h3>
+                <h3 class="text-lg font-semibold text-gray-800">View Stocking</h3>
+            </div>
+        </a>
+
+        <a th:href="@{/checkout}" class="block p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4">
+            <div class="flex-shrink-0">
+                <!-- Font Awesome icon for ViewStocking -->
+                <i class="fa-solid fa-box-open text-2xl" style="color: #B197FC;"></i>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">Pull Product</h3>
+            </div>
+        </a>
+
+
+        <a th:href="@{/stock/view-stock}" class="block p-6 bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 flex items-center space-x-4">
+            <div class="flex-shrink-0">
+                <!-- Font Awesome icon for ViewStocking -->
+                <i class="fa-solid fa-box-archive text-2xl"></i>
+            </div>
+            <div>
+                <h3 class="font-semibold text-gray-800 text-lg">Remove Product</h3>
             </div>
         </a>
 

@@ -6,6 +6,7 @@ $(document).ready(function () {
     let currentPage = 0;
     let currentSearch = '';
 
+
     // Render table rows
     function renderTable(data) {
         $unitList.empty();
@@ -32,21 +33,23 @@ $(document).ready(function () {
             <div class="flex flex-col">
               <span class="text-gray-900 font-semibold">${item.productName}</span>
               <span class="text-gray-500 text-sm">${item.brandName || ''}</span>
+               <span class="text-purple-800 text-xs font-medium">${item.categories || ''}</span>
             </div>
           </td>
           <td class="py-3 px-4 border-b border-r border-gray-200 text-gray-700">${item.skuCode}</td>
           <td class="py-3 px-4 border-b border-r border-gray-200">
-            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">${item.isSerialized === 'Y' ? 'Y' : 'N'}</span>
+            <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">${item.isSerialized === 'Y' ? 'Yes' : 'No'}</span>
           </td>
-          <td class="py-3 px-4 border-b border-r border-gray-200">
-            <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full">${item.categoryName || ''}</span>
-          </td>
-          <td class="py-3 px-4 border-b border-r border-gray-200 text-gray-700">${item.locationPath || ''}</td>
-          <td class="py-3 px-4 border-b border-r border-gray-200 text-gray-700">${item.quantity || 0}</td>
+         
+          <td class="py-3 px-4 border-b border-r border-gray-200 text-gray-700 text-md">${item.locationPath || ''}</td>
+          <td class="py-3 px-4 border-b border-r border-gray-200 text-gray-700">${item.totalQuantity || 0}</td>
+          <td class="py-3 px-4 border-b border-r border-gray-200 text-gray-700">${item.locationNote}</td>
           <td class="py-3 px-4 text-center border-b border-gray-200">
-            <a href="#" class="text-indigo-600 hover:text-indigo-900 font-medium">
-              <i class="fas fa-pencil-alt"></i>
-            </a>
+           <a href="#" 
+           class="text-indigo-600 hover:text-indigo-900 font-medium view-btn" 
+           data-item='${JSON.stringify(item)}'>
+            <i class="fa-solid fa-eye"></i>
+        </a>
           </td>
         </tr>
       `);
@@ -117,6 +120,78 @@ $(document).ready(function () {
         const checked = $(this).prop('checked');
         $unitList.find('input[type=checkbox]').prop('checked', checked);
     });
+
+
+    $(document).on("click", ".view-btn", function(e) {
+        e.preventDefault();
+        const item = $(this).data("item");
+
+        const contentHtml = `
+      <p><strong>Product:</strong> ${item.productName}</p>
+      <p><strong>Brand:</strong> ${item.brandName || ''}</p>
+      <p><strong>SKU:</strong> ${item.skuCode}</p>
+      <p><strong>Description:</strong> ${item.skuDescription || ''}</p>
+      <p><strong>Category:</strong> ${item.categories || ''}</p>
+      <p><strong>Serialized:</strong> 
+        <span class="px-2 py-0.5 rounded-full text-xs font-medium ${item.isSerialized === 'Y' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+          ${item.isSerialized === 'Y' ? 'Yes' : 'No'}
+        </span>
+      </p>
+      <p><strong>Quantity:</strong> ${item.totalQuantity}</p>
+      <p><strong>Individual Quantity:</strong> ${item.individualQuantity}</p>
+      <p><strong>Inventory Quantity:</strong> ${item.inventoryQuantity}</p>
+      <p><strong>Location:</strong> ${item.locationPath}</p>
+      <p><strong>Location Note:</strong> ${item.locationNote || ''}</p>
+      <p><strong>Location ID:</strong> ${item.locationId}</p>
+      <p><strong>Base Price:</strong> $${item.basePrice}</p>
+      <p><strong>Sale Price:</strong> $${item.salePrice}</p>
+    `;
+
+        $("#overlayContent").html(contentHtml);
+        $("#overlay").removeClass("hidden").fadeIn();
+    });
+
+    // Close overlay
+    $("#closeOverlay").on("click", function() {
+        $("#overlay").fadeOut().addClass("hidden");
+    });
+
+    // Close by clicking outside the card
+    $("#overlay").on("click", function(e) {
+        if (e.target.id === "overlay") {
+            $(this).fadeOut().addClass("hidden");
+        }
+    });
+
+    // Print sticker from overlay
+    $("#printOverlay").on("click", function() {
+        const itemHtml = $("#overlayContent").html();
+        const $printArea = $("<div>").html(itemHtml).css({
+            width: "44mm",
+            padding: "4px",
+            fontFamily: "Arial, sans-serif",
+            fontSize: "9px",
+            textAlign: "center",
+            border: "1px solid #000"
+        }).appendTo("body");
+
+        const opt = {
+            margin: 0,
+            filename: "sticker.pdf",
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: [44, 60], orientation: 'portrait' }
+        };
+
+        // generate PDF and open in new tab
+        html2pdf().set(opt).from($printArea[0]).outputPdf('bloburl').then(function(blobUrl) {
+            window.open(blobUrl, '_blank');
+            $printArea.remove();
+        });
+    });
+
+
+
 
     // Initial fetch
     fetchData();
