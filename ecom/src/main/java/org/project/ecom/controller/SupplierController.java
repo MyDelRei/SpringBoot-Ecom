@@ -97,7 +97,7 @@ public class SupplierController {
     }
 
     @PostMapping("/batch")
-    public ResponseEntity<Map<String, Object>> createSupplierProducts(@RequestBody List<SupplierProductRequestDto> dtos) {
+    public ResponseEntity<?> createSupplierProducts(@RequestBody List<SupplierProductRequestDto> dtos) {
         List<SupplierProduct> savedProducts = supplierService.createSupplierProducts(dtos);
 
         Map<String, Object> response = new HashMap<>();

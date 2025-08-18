@@ -1,0 +1,27 @@
+version: "3.9"
+services:
+  oracle-db:
+    build: ./oracle
+    container_name: oracle-db
+    ports:
+      - "1521:1521"
+    environment:
+      ORACLE_PASSWORD: 1212
+    healthcheck:
+      test: ["CMD", "tnsping", "XE"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  spring-app:
+    build: ./ecom
+    container_name: spring-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      oracle-db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:oracle:thin:@oracle-db:1521/XE
+      SPRING_DATASOURCE_USERNAME: ECOM_PROJECT
+      SPRING_DATASOURCE_PASSWORD: 1212
